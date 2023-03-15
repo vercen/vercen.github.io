@@ -1,5 +1,5 @@
 @font-face {
     font-family: 'MaoKenZhuYuanTi';
-    font-display: swap;
+    /* font-display: swap; */
     src: url('../font/MaoKenZhuYuanTi.ttf') format("truetype");
   }
