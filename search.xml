@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>@Autowired和@Resource的区别</title>
+      <link href="/2023/02/25/@Autowired%E5%92%8C@Resource/"/>
+      <url>/2023/02/25/@Autowired%E5%92%8C@Resource/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="Autowired和-Resource"><a href="#Autowired和-Resource" class="headerlink" title="@Autowired和@Resource"></a>@Autowired和@Resource</h1><blockquote><p>Spring的一大核心功能就是IOC，它能帮助我们实现自动装配，</p></blockquote><hr><ul><li>@Resource和@Autowired都可以作为注入属性的修饰，在接口仅有单一实现类时，两个注解的修饰效果相同，可以互相替换，不影响使用。</li></ul><p>当我们在将一个类上标注@Service或者@Controller或@Component或@Repository注解之后，<em><strong>spring的组件扫描就会自动发现它，并且会将其初始化为spring应用上下文中的bean。</strong></em></p><p>当需要使用这个bean的时候，例如加上@Autowired注解的时候，这个bean就会被创建。而且初始化是根据无参构造函数。</p><p>注释可以直接在属性上使用，因此不需要getter和setter:</p><p>例如</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(&quot;fooFormatter&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FooFormatter</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">format</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;foo&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FooService</span> &#123;</span><br><span class="line">     </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> FooFormatter fooFormatter;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>在上面的例子中，创建FooService时，Spring查找并注入fooFormatter。</p><h1 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h1><p>1、@Resource是JDK原生的注解，@Autowired是Spring2.5 引入的注解</p><p>2、@Resource有两个属性name和type。Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。</p><p>@Autowired只根据type进行注入，不会去匹配name。如果涉及到type无法辨别注入对象时，那需要依赖@Qualifier或@Primary注解一起来修饰。</p><p><strong>@Autowired</strong></p><p><img src="https://cdn.jsdelivr.net/gh/vercen/picodemo/img/202303251644653.webp" alt="img"></p><p><strong>@Resource</strong></p><p><img src="https://cdn.jsdelivr.net/gh/vercen/picodemo/img/202303251645363.webp" alt="img"></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>@Autowired功能虽说非常强大，但是也有些不足之处。比如它跟Spring强耦合了，如果换成了其他框架，功能就会失效。而@Resource是JSR-250提供的，它是Java标准，绝大部分框架都支持。</p><p>除此之外，有些场景使用@Autowired无法满足的要求，改成@Resource却能解决问题。</p><p>1、@Autowired默认按byType自动装配，而@Resource默认byName自动装配。</p><p>2、@Autowired只包含一个参数：required，表示是否开启自动准入，默认是true。而@Resource包含七个参数，其中最重要的两个参数是：name 和 type。</p><p>3、@Autowired如果要使用byName，需要使用@Qualifier一起配合。而@Resource如果指定了name，则用byName自动装配，如果指定了type，则用byType自动装配。</p><p>4、@Autowired能够用在：构造器、方法、参数、成员变量和注解上，而@Resource能用在：类、成员变量和方法上。</p><p>5、@Autowired是Spring定义的注解，而@Resource是JSR-250定义的注解。</p><p>6、二者装配顺序不同</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> spring </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spring </tag>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/01/28/hello-world/"/>
       <url>/2023/01/28/hello-world/</url>
