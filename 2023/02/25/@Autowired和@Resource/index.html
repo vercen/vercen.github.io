@@ -174,9 +174,9 @@
 <p>2、@Resource有两个属性name和type。Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。</p>
 <p>@Autowired只根据type进行注入，不会去匹配name。如果涉及到type无法辨别注入对象时，那需要依赖@Qualifier或@Primary注解一起来修饰。</p>
 <p><strong>@Autowired</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vercen/picodemo/img/202303251644653.webp" alt="img"></p>
+<p><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303252014969.webp" alt="img"></p>
 <p><strong>@Resource</strong></p>
-<p><img src="https://cdn.jsdelivr.net/gh/vercen/picodemo/img/202303251645363.webp" alt="img"></p>
+<p><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303252015360.webp" alt="img"></p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>@Autowired功能虽说非常强大，但是也有些不足之处。比如它跟Spring强耦合了，如果换成了其他框架，功能就会失效。而@Resource是JSR-250提供的，它是Java标准，绝大部分框架都支持。</p>
 <p>除此之外，有些场景使用@Autowired无法满足的要求，改成@Resource却能解决问题。</p>
 <p>1、@Autowired默认按byType自动装配，而@Resource默认byName自动装配。</p>
@@ -233,7 +233,7 @@
       loadTwikoo()
     }
   }
-})()</script></div><div class="aplayer no-destroy" data-id="7675293488" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-autoplay="true"> </div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+})()</script></div><div class="aplayer no-destroy" data-id="1753685513" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-autoplay="true"> </div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
 var pjax = new Pjax({
   elements: 'a:not([target="_blank"])',
