@@ -510,31 +510,6 @@
     
     
     <entry>
-      <title>如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络</title>
-      <link href="/2022/08/25/%E5%A6%82%E4%BD%95%E7%BB%95%E8%BF%87%E6%A0%A1%E5%9B%AD%E7%BD%91%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%9C%A8%E5%AE%BF%E8%88%8D%E5%85%8D%E8%B4%B9%E4%B8%8A%E5%8A%9E%E5%85%AC%E5%8C%BA%E7%9A%84%E7%BD%91%EF%BC%8C%E4%BA%AB%E5%8F%97%E4%B8%8D%E6%8B%A5%E6%8C%A4%E7%9A%84%E7%BD%91%E7%BB%9C/"/>
-      <url>/2022/08/25/%E5%A6%82%E4%BD%95%E7%BB%95%E8%BF%87%E6%A0%A1%E5%9B%AD%E7%BD%91%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%9C%A8%E5%AE%BF%E8%88%8D%E5%85%8D%E8%B4%B9%E4%B8%8A%E5%8A%9E%E5%85%AC%E5%8C%BA%E7%9A%84%E7%BD%91%EF%BC%8C%E4%BA%AB%E5%8F%97%E4%B8%8D%E6%8B%A5%E6%8C%A4%E7%9A%84%E7%BD%91%E7%BB%9C/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络"><a href="#如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络" class="headerlink" title="如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络"></a>如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络</h1><p><strong>如何绕过校园网验证，在宿舍免费用办公区的网</strong></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>上了大学后发现上网成了难题，流量太贵买不起，流量卡又限速而且电脑上网也不方便，想办校园单宽，可是那网络体验根本配不上付的钱，除非去校园营业厅办移动或者联通的卡开通校园网套餐，可，我，不愿向垄断的运营商和学校低头！</p></blockquote><p>既然办公区网速比宿舍区快，能上网，那就利用办公区电脑，在宿舍就可以连了！</p><p><strong>需求</strong>：一台办公区的电脑</p><h2 id="利用Softether改造办公区电脑"><a href="#利用Softether改造办公区电脑" class="headerlink" title="利用Softether改造办公区电脑"></a>利用Softether改造办公区电脑</h2><p>在办公区的电脑上下载Softether<a href="https://www.softether-download.com/cn.aspx?product=softether">点击下载</a>，选择适合你的版本，在这里我选择如下的版本：<img src="https://img-blog.csdnimg.cn/20191231214354250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20191108235602493.png" alt="下载这个"></p><p>下载完成后安装，安装时选择<strong>SoftEther *</strong> Server**，这里我们是把电脑当作服务器的，所以要安装服务器端的软件部分。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>安装完成后打开：</p><p><img src="https://img-blog.csdnimg.cn/2019110900035036.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="打开界面"></p><p>双击<strong>本地主机</strong>这一行：</p><p><img src="https://img-blog.csdnimg.cn/20191109000637942.png" alt="双击"></p><p>会让你设置一个管理密码，设置完之后就可以开始配置了。</p><p><strong>端口号</strong>要选择<strong>5555</strong></p><p>下图为开始配置界面：</p><p><img src="https://img-blog.csdnimg.cn/20191109000748392.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="开始配置"></p><p>点击<strong>管理虚拟HUB</strong>，进入此界面：</p><p><img src="https://img-blog.csdnimg.cn/2019110900100024.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 启用<strong>虚拟NAT和虚拟DHCP服务器</strong>：<img src="https://img-blog.csdnimg.cn/20191109001127308.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>关闭，然后可以点击<strong>管理用户</strong>，<strong>新建</strong>，添加账号密码等</p><p><img src="https://img-blog.csdnimg.cn/20191109001400608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20191109001454592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>回到最开始的界面，点击<strong>IPsec&#x2F;L2TP设置</strong>：</p><p><img src="https://img-blog.csdnimg.cn/20191109001642235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p><strong>启用L2TP功能</strong>，并设置<strong>预共享密钥</strong>，随便设置一个就行。</p><p>完成！</p><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>在手机或者其他想上网的电脑上新建VPN连接，</p><p><img src="https://img-blog.csdnimg.cn/20191109142622641.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>然后连上就可以了，记得要<strong>先连上校园网WiFi或者接上网线</strong>，不用登录校园网账号了，直接“连接到工作区域”。 只要在办公区那台电脑上连上网并且可以正常上网，其他设备连上它就可以正常使用，就可以在<strong>宿舍连上办公区</strong>的网了。</p><p>配置连接时，<strong>服务器地址</strong>填刚刚配置Softether的那台电脑的IP，可以在那台电脑上用cmd命令ipconfig得到。</p><p>终于，可以愉快地上网了。开森~</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 笔记 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 校园网 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>关于『代理』的不完全使用指北</title>
       <link href="/2022/08/25/%E4%BD%A0%E7%9A%84%E6%B5%81%E9%87%8F%E5%A6%82%E4%BD%95%E6%8E%A5%E5%85%A5%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6/"/>
       <url>/2022/08/25/%E4%BD%A0%E7%9A%84%E6%B5%81%E9%87%8F%E5%A6%82%E4%BD%95%E6%8E%A5%E5%85%A5%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6/</url>
@@ -552,6 +527,31 @@
         <tags>
             
             <tag> 代理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络</title>
+      <link href="/2022/08/25/%E5%A6%82%E4%BD%95%E7%BB%95%E8%BF%87%E6%A0%A1%E5%9B%AD%E7%BD%91%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%9C%A8%E5%AE%BF%E8%88%8D%E5%85%8D%E8%B4%B9%E4%B8%8A%E5%8A%9E%E5%85%AC%E5%8C%BA%E7%9A%84%E7%BD%91%EF%BC%8C%E4%BA%AB%E5%8F%97%E4%B8%8D%E6%8B%A5%E6%8C%A4%E7%9A%84%E7%BD%91%E7%BB%9C/"/>
+      <url>/2022/08/25/%E5%A6%82%E4%BD%95%E7%BB%95%E8%BF%87%E6%A0%A1%E5%9B%AD%E7%BD%91%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%9C%A8%E5%AE%BF%E8%88%8D%E5%85%8D%E8%B4%B9%E4%B8%8A%E5%8A%9E%E5%85%AC%E5%8C%BA%E7%9A%84%E7%BD%91%EF%BC%8C%E4%BA%AB%E5%8F%97%E4%B8%8D%E6%8B%A5%E6%8C%A4%E7%9A%84%E7%BD%91%E7%BB%9C/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络"><a href="#如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络" class="headerlink" title="如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络"></a>如何绕过校园网验证，在宿舍免费上办公区的网，享受不拥挤的网络</h1><p><strong>如何绕过校园网验证，在宿舍免费用办公区的网</strong></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote><p>上了大学后发现上网成了难题，流量太贵买不起，流量卡又限速而且电脑上网也不方便，想办校园单宽，可是那网络体验根本配不上付的钱，除非去校园营业厅办移动或者联通的卡开通校园网套餐，可，我，不愿向垄断的运营商和学校低头！</p></blockquote><p>既然办公区网速比宿舍区快，能上网，那就利用办公区电脑，在宿舍就可以连了！</p><p><strong>需求</strong>：一台办公区的电脑</p><h2 id="利用Softether改造办公区电脑"><a href="#利用Softether改造办公区电脑" class="headerlink" title="利用Softether改造办公区电脑"></a>利用Softether改造办公区电脑</h2><p>在办公区的电脑上下载Softether<a href="https://www.softether-download.com/cn.aspx?product=softether">点击下载</a>，选择适合你的版本，在这里我选择如下的版本：<img src="https://img-blog.csdnimg.cn/20191231214354250.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20191108235602493.png" alt="下载这个"></p><p>下载完成后安装，安装时选择<strong>SoftEther *</strong> Server**，这里我们是把电脑当作服务器的，所以要安装服务器端的软件部分。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>安装完成后打开：</p><p><img src="https://img-blog.csdnimg.cn/2019110900035036.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="打开界面"></p><p>双击<strong>本地主机</strong>这一行：</p><p><img src="https://img-blog.csdnimg.cn/20191109000637942.png" alt="双击"></p><p>会让你设置一个管理密码，设置完之后就可以开始配置了。</p><p><strong>端口号</strong>要选择<strong>5555</strong></p><p>下图为开始配置界面：</p><p><img src="https://img-blog.csdnimg.cn/20191109000748392.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="开始配置"></p><p>点击<strong>管理虚拟HUB</strong>，进入此界面：</p><p><img src="https://img-blog.csdnimg.cn/2019110900100024.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> 启用<strong>虚拟NAT和虚拟DHCP服务器</strong>：<img src="https://img-blog.csdnimg.cn/20191109001127308.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>关闭，然后可以点击<strong>管理用户</strong>，<strong>新建</strong>，添加账号密码等</p><p><img src="https://img-blog.csdnimg.cn/20191109001400608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"> <img src="https://img-blog.csdnimg.cn/20191109001454592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>回到最开始的界面，点击<strong>IPsec&#x2F;L2TP设置</strong>：</p><p><img src="https://img-blog.csdnimg.cn/20191109001642235.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p><strong>启用L2TP功能</strong>，并设置<strong>预共享密钥</strong>，随便设置一个就行。</p><p>完成！</p><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>在手机或者其他想上网的电脑上新建VPN连接，</p><p><img src="https://img-blog.csdnimg.cn/20191109142622641.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQ0MTgyNjc=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>然后连上就可以了，记得要<strong>先连上校园网WiFi或者接上网线</strong>，不用登录校园网账号了，直接“连接到工作区域”。 只要在办公区那台电脑上连上网并且可以正常上网，其他设备连上它就可以正常使用，就可以在<strong>宿舍连上办公区</strong>的网了。</p><p>配置连接时，<strong>服务器地址</strong>填刚刚配置Softether的那台电脑的IP，可以在那台电脑上用cmd命令ipconfig得到。</p><p>终于，可以愉快地上网了。开森~</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 校园网 </tag>
             
         </tags>
       
