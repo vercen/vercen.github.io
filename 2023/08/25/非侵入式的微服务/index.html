@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>服务器常用操作整理 | Vercen'blog</title><meta name="author" content="Vercen"><meta name="copyright" content="Vercen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="非侵入式的微服务教学目标 了解非侵入式以及侵入式微服务的概念 了解k8s相关的知识 了解istio的相关知识  预习内容 Spring Cloud http:&#x2F;&#x2F;c.biancheng.net&#x2F;springcloud&#x2F;micro-service.html k8s: https:&#x2F;&#x2F;www.kubernetes.org.cn&#x2F;doc-11 istio https:&#x2F;&#x2F;istio.io&#x2F;latest&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器常用操作整理">
+<meta property="og:url" content="https://vercen.github.io/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Vercen&#39;blog">
+<meta property="og:description" content="非侵入式的微服务教学目标 了解非侵入式以及侵入式微服务的概念 了解k8s相关的知识 了解istio的相关知识  预习内容 Spring Cloud http:&#x2F;&#x2F;c.biancheng.net&#x2F;springcloud&#x2F;micro-service.html k8s: https:&#x2F;&#x2F;www.kubernetes.org.cn&#x2F;doc-11 istio https:&#x2F;&#x2F;istio.io&#x2F;latest&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg">
+<meta property="article:published_time" content="2023-08-25T08:21:57.000Z">
+<meta property="article:modified_time" content="2023-08-30T09:40:39.472Z">
+<meta property="article:author" content="Vercen">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://vercen.github.io/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '服务器常用操作整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-30 17:40:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/static-butterfly/dist/css/index.min.css"><link rel="stylesheet" href="/css/font.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808125.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Vercen'blog"><span class="site-name">Vercen'blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">服务器常用操作整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-25T08:21:57.000Z" title="发表于 2023-08-25 16:21:57">2023-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-30T09:40:39.472Z" title="更新于 2023-08-30 17:40:39">2023-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">18k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>60分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="服务器常用操作整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="非侵入式的微服务"><a href="#非侵入式的微服务" class="headerlink" title="非侵入式的微服务"></a>非侵入式的微服务</h1><h1 id="教学目标"><a href="#教学目标" class="headerlink" title="教学目标"></a>教学目标</h1><ol>
+<li>了解非侵入式以及侵入式微服务的概念</li>
+<li>了解k8s相关的知识</li>
+<li>了解istio的相关知识</li>
+</ol>
+<h1 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h1><ul>
+<li>Spring Cloud <a target="_blank" rel="noopener" href="http://c.biancheng.net/springcloud/micro-service.html">http://c.biancheng.net/springcloud/micro-service.html</a></li>
+<li>k8s: <a target="_blank" rel="noopener" href="https://www.kubernetes.org.cn/doc-11">https://www.kubernetes.org.cn/doc-11</a></li>
+<li>istio <a target="_blank" rel="noopener" href="https://istio.io/latest/zh/docs/">https://istio.io/latest/zh/docs/</a></li>
+</ul>
+<h1 id="上课准备"><a href="#上课准备" class="headerlink" title="上课准备"></a>上课准备</h1><p>git地址： <a target="_blank" rel="noopener" href="http://120.92.88.48/luanmengjun/weifuwuday4">http://120.92.88.48/luanmengjun/weifuwuday4</a></p>
+<h1 id="3-非侵入式的微服务"><a href="#3-非侵入式的微服务" class="headerlink" title="3.非侵入式的微服务"></a>3.非侵入式的微服务</h1><h2 id="3-1-代码的侵入式跟非侵入式的介绍"><a href="#3-1-代码的侵入式跟非侵入式的介绍" class="headerlink" title="3.1 代码的侵入式跟非侵入式的介绍"></a>3.1 代码的侵入式跟非侵入式的介绍</h2><p>​      侵入式和非侵入式是两种不同的设计思想，通常用来描述软件框架或者组件对应用程序的影响程度。</p>
+<p>​      从代码的角度来说，侵入性强指的是耦合太强了，大多数代码表现为对框架类的继承，这样固然会可以利用框架的便利带来便利的功能，但是，重构就会带来非常痛苦的体验。非侵入式，主要是指未引入框架，这样的好处是可以提现高内聚，低耦合，但是在框架类提供的便利方法也无法实现。以下我们来具体看看两者在代码方面的区别。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NDlmNjlhNDJmMGM5YTk2ZjY0OTUyYjExYjAwYmVjMjNfSkk3d29NVmtjUVY3MTNmMkdGMmRTWnNWVkNSRWp4MFpfVG9rZW46UFpKZ2IzSkxIb2ZOcjR4QWFyR2MzT2p4bkZiXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>侵入式的设计</strong></li>
+</ul>
+<p>​      侵入式的设计，就是设计者将框架或者组件的功能“推”给应用程序，要求应用程序必须遵循框架或者组件的规范，修改或者依赖应用程序的代码，才能使用框架或者组件的功能。例如，Java 中的继承，必须显示地表明要继承哪个接口，才能拥有接口的一些功能。</p>
+<p>​      Struts1代码实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> //该RegisterAction是由Struts1来调用，Struts1会调用它的execute方法处理请求</span><br><span class="line">public class RegisterAction extends Action &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,</span><br><span class="line">                        HttpServletResponse response) throws Exception &#123;</span><br><span class="line">                RegisterFormBean registerForm = (RegisterFormBean) request.getAttribute(&quot;registerForm&quot;);</span><br><span class="line">                String username = registerForm.getUsername();</span><br><span class="line">                String password = registerForm.getPassword();</span><br><span class="line">                String email = registerForm.getEmail();</span><br><span class="line">                try &#123;</span><br><span class="line">                        System.out.println(&quot;向数据库中注册&quot; + username + &quot;用户&quot;);</span><br><span class="line">                        request.setAttribute(&quot;message&quot;, &quot;注册成功！！&quot;);</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                        request.setAttribute(&quot;message&quot;, &quot;注册失败！！&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                return mapping.findForward(&quot;message&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  参考资料：<a target="_blank" rel="noopener" href="https://struts.apache.org/getting-started/">https://struts.apache.org/getting-started/</a></p>
+<ul>
+<li><strong>非侵入式的设计</strong></li>
+</ul>
+<p>​      非侵入式的设计，就是设计者将应用程序的功能“拿”到框架或者组件中用，不要求应用程序修改或者依赖框架或者组件的代码，而是通过反射、代理、注解等技术，实现对应用程序的增强或者隔离。例如，Go 中的接口，不需要显示地继承接口，只需要实现接口的所有方法就叫实现了该接口，即便该接口删掉了，也不会影响应用程序。</p>
+<p>​      我们可以对比一下java跟go的接口的区别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func (k *KceOpenapi) CreateCluster(ctx context.Context, req interface&#123;&#125;) (res *dto.CreateClusterRes, err error) &#123;</span><br><span class="line">   resp, err := k.doRequest(ctx, consts.CreateCluster, req)</span><br><span class="line">   if err != nil &#123;</span><br><span class="line">      return nil, err</span><br><span class="line">   &#125;</span><br><span class="line">   if err = gconv.Struct(resp.ReadAll(), &amp;res); err != nil &#123;</span><br><span class="line">      return nil, err</span><br><span class="line">   &#125;</span><br><span class="line">   return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>go的interface参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yuqiang870/article/details/124746693">https://blog.csdn.net/yuqiang870/article/details/124746693</a></p>
+<ul>
+<li><strong>侵入式的优缺点</strong></li>
+</ul>
+<p>优点：通过侵入代码与你的代码结合可以更好的利用侵入代码提供给的功能。 缺点：框架外代码就不能使用了，不利于代码复用。依赖太多重构代码太痛苦了。</p>
+<ul>
+<li><strong>非侵入式的优缺点</strong></li>
+</ul>
+<p>优点：代码可复用，方便移植。非侵入式也体现了代码的设计原则：高内聚，低耦合。 缺点：无法复用框架提供的代码和功能。</p>
+<p><strong>微服务从侵入式到非侵入式</strong></p>
+<p>​       在前面我们从代码的角度的去探究了侵入式与非侵入式，现在我们从微服务的角度来看看，什么是侵入式的微服务，什么是非侵入式的。</p>
+<p>​       目前主流的微服务框架如springCloud，基本都要求开发者在微服务框架本身的代码上进行开发，代码非常依赖框架，导致如果更换框架，就需要修改代码，并且，微服务之间的耦合度较高，这种就属于侵入式的框架，导致其可移植性以及可维护性都很低。随着云原生技术的发展，服务网格的概念兴起了，这是一种侵入式的框架，开发者在这个框架下不需要再引入框架代码，同时只需进行简单的配置就可以实现微服务的注册、发现、通信和治理等基本功能。大大提高了代码的可移植性，并与云原生技术紧密结合，可以轻松的在云上进行部署，是未来微服务的发展方向。</p>
+<h2 id="3-2-主流侵入式微服务框架的介绍"><a href="#3-2-主流侵入式微服务框架的介绍" class="headerlink" title="3.2 主流侵入式微服务框架的介绍"></a>3.2 主流侵入式微服务框架的介绍</h2><p>​      侵入式设计，就是设计者将框架功能“推”给客户端，要求客户端的代码“知道”框架的代码，表现为客户端代码需要继承或引用框架提供的类或接口。目前主流的侵入式框架主要有springCloud、Dobbo以及Apache ServiceComb，以下为一一对其进行介绍：</p>
+<h3 id="3-2-1-Spring-Cloud"><a href="#3-2-1-Spring-Cloud" class="headerlink" title="3.2.1 Spring Cloud"></a>3.2.1 <strong>Spring Cloud</strong></h3><p>​      Spring Cloud是一个基于Spring Boot的微服务开发框架，提供了一系列的工具和组件，用于快速构建分布式系统中的常见模式，例如配置管理、服务发现、断路器、智能路由、微代理、控制总线等。</p>
+<p>​      Spring Cloud的核心特点是提供了统一的配置中心、注册中心和网关等基础设施，使得微服务之间可以轻松地进行通信和协作，同时也提供了分布式锁、领导选举、分布式会话、集群状态等高级功能。</p>
+<p>​      Spring Cloud支持多种主流的微服务框架，例如Spring Cloud Netflix、Spring Cloud Alibaba、Spring Cloud Kubernetes等。其优势在于提供了成熟和完善的微服务开发和运维方案，支持多语言和多运行时，有丰富的社区和文档支持。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=YjM0NWU0NmVjMGRhOGQ4OWIwY2VkNmVlYWMyZjRmMGZfSTdUOWZJR2pNY0ppSWZSZDJlTFN4bDE1dW85d2VYaTFfVG9rZW46UFBtQmJVWGtNbzNoNG14NmQ4eWNydWcwbkhmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​     </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MmQ5NGVlNTgyZDRmMmNmNjc3ZGE0ZmFjY2ZkMmRjZDlfR09EUGtTVmVDMDZMUjFNOHdjWkxHdDBPWHVtTFlVNE1fVG9rZW46Uzl2RGJZMG8zb0ROY0V4MVk5Z2NPb3ZqbkVjXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>bootAdmin：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zouliping123456/article/details/121977792">https://blog.csdn.net/zouliping123456/article/details/121977792</a></p>
+<p>turbine：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30783629/article/details/95431381">https://blog.csdn.net/weixin_30783629/article/details/95431381</a></p>
+<p>sleuth：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/qdhxhz/p/14781887.html">https://www.cnblogs.com/qdhxhz/p/14781887.html</a></p>
+<p>Cloud stream：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Dhjie_king/article/details/117416359">https://blog.csdn.net/Dhjie_king/article/details/117416359</a></p>
+<p>zipkin：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq924862077/article/details/80285536">https://blog.csdn.net/qq924862077/article/details/80285536</a></p>
+<p>cloudTask：<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15326439/5911294">https://blog.51cto.com/u_15326439/5911294</a></p>
+<p>ELK：<strong>Elasticsearch, Logstash, Kibana</strong></p>
+<p>​    Spring Cloud的主要特点有如下几个方面：</p>
+<ul>
+<li>Spring Cloud拥有强大的社区支持和丰富的教程资源。</li>
+<li>Spring Cloud采用了 Spring Boot 的约定优于配置的理念，简化了开发和配置的复杂度，提高了开发效率和可维护性。</li>
+<li>Spring Cloud集成了多种 Netflix OSS 和 Alibaba Cloud 的开源组件，提供了服务注册与发现、配置中心、服务网关、负载均衡、熔断降级、分布式事务、分布式消息等功能，覆盖了微服务架构的各个方面。</li>
+<li>Spring Cloud支持多种编程语言和存储技术，可以实现跨平台的服务通信和数据交互。</li>
+<li>Spring Cloud适应了互联网时代需求，可以实现快速迭代、持续交付、动态扩缩容等能力，提高了系统的可用性和可靠性。</li>
+</ul>
+<h3 id="3-2-2-spring-cloud-侵入性"><a href="#3-2-2-spring-cloud-侵入性" class="headerlink" title="3.2.2 spring cloud 侵入性"></a>3.2.2 spring cloud 侵入性</h3><p>​       在介绍了spring cloud之后，我们以一个非常简单的微服务为例来看看，springCloud的侵入性主要体现在那些方面：</p>
+<p>​     </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MTZiY2Y2ODdkMmM1Nzg2YzNhNTU2NjcwN2ZkODM3MDlfenJhRzFydHE2Z0RRVHdWUUVydjUyUWFIVjlxVzFpN1lfVG9rZW46UmtsdGIyckVCbzlYbzh4R3d3a2M2c1NBbk1nXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>consumer代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConsumerApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@LoadBalanced</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(ConsumerApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RestController</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Autowired</span></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">TestController</span><span class="params">(RestTemplate restTemplate)</span> &#123;<span class="built_in">this</span>.restTemplate = restTemplate;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/echo/&#123;str&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">echo</span><span class="params">(<span class="meta">@PathVariable</span> String str)</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> restTemplate.getForObject(<span class="string">&quot;http://service-provider/echo/&quot;</span> + str, String.class);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>  provide代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProviderApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(ProviderApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RestController</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">EchoController</span> &#123;</span><br><span class="line">        <span class="meta">@RequestMapping(value = &quot;/echo/&#123;string&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">echo</span><span class="params">(<span class="meta">@PathVariable</span> String string)</span> &#123;</span><br><span class="line">            log.info(<span class="string">&quot;receive msg: &#123;&#125;&quot;</span>, string);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello Discovery &quot;</span> + string;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>侵入性的体现</strong></li>
+</ul>
+<p>​     1.spring Cloud 是通过maven依赖的方式引入的，在打包时，会依赖对应的库，需要程序员考虑maven包之间的依赖以及版本匹配问题。</p>
+<p>​     2.业务代码与非业务代码在项目里时融合在一起的，很难进行完整的区分，导致业务可能因为非业务代码的原因出现问题。</p>
+<p>​     3.使用不同语言进行微服务开发时，需要针对不同的情况进行适配以及修改。</p>
+<ul>
+<li><strong>侵入式引发的问题</strong></li>
+</ul>
+<p>​     1.语言的问题：springCloud 主要使用java语言，当微服务中其他服务使用其他语言时，会提高整体微服务的学习成本，如何将其他服务融入当前框架中。</p>
+<p>​    2.组件的使用：虽然springCloud提供了非常多很好用的组件，但是这些组件都是通过maven仓库依赖的方式引入的，这些组件的升级以及跟微服务的版本的匹配问题会同时引入到项目中，成为程序员在业务代码逻辑之外需要考虑的额外问题。</p>
+<p>​    3.学习成本的问题：springCloud全家桶的功能虽然十分全面，但是，如果想具体用好每一个功能，都需要进行学习以及配置，对于应该专注与业务的程序员来说，学习成本还是偏高。</p>
+<h2 id="3-3-侵入式微服务框架的优缺点"><a href="#3-3-侵入式微服务框架的优缺点" class="headerlink" title="3.3 侵入式微服务框架的优缺点"></a>3.3 <strong>侵入式微服务框架的优缺点</strong></h2><p>​       传统的侵入式微服务框架是指那些需要在业务代码中引入相关依赖或注解，或者需要遵循特定的编程模型或规范的微服务框架。例如，Spring Cloud、Dubbo、brpc等都属于侵入式微服务框架。它们的特点和优缺点如下：</p>
+<ul>
+<li>特点：<ul>
+<li>提供了丰富的功能和组件，如服务发现、配置中心、负载均衡、熔断器、网关等</li>
+<li>有成熟的社区和文档支持，易于学习和使用</li>
+<li>有较高的性能和稳定性，适合高并发场景</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>降低了微服务开发的复杂度，提高了开发效率</li>
+<li>规范和统一了微服务间的调用方式，方便了服务治理</li>
+<li>有利于代码重用和复用，减少了冗余代码</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>增加了业务代码的耦合度，降低了灵活性和可移植性</li>
+<li>需要适应框架的约束和限制，不能随意更换或升级框架</li>
+<li>难以适应云原生技术的变化和发展，需要额外的适配和对接</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-4-非侵入式微服务框架的演化以及概念"><a href="#3-4-非侵入式微服务框架的演化以及概念" class="headerlink" title="3.4 非侵入式微服务框架的演化以及概念"></a>3.4 非侵入式微服务框架的演化以及概念</h2><p>​     非侵入的微服务框架是指不需要对现有的服务代码做任何修改，就可以实现微服务的注册、发现、调用等功能的框架。比如，将服务注册和服务调用从现有服务中抽离出来，形成一个服务代理。这样可以降低微服务的开发和维护成本，提高微服务的可扩展性和可靠性。</p>
+<h3 id="3-4-1-非侵入式框架的设计原理"><a href="#3-4-1-非侵入式框架的设计原理" class="headerlink" title="3.4.1 非侵入式框架的设计原理"></a>3.4.1 <strong>非侵入式框架的设计原理</strong></h3><p>非侵入式设计是一种编程方式，它采用组合或实现的方式使类和类之间弱耦合，从而提高灵活性。非侵入式设计，就是设计者将客户端的功能“拿”到框架中用，不需要客户端的代码引入或继承框架的代码，表现为客户端代码只需要实现框架提供的接口。</p>
+<h3 id="3-4-2-微服务框架的演变"><a href="#3-4-2-微服务框架的演变" class="headerlink" title="3.4.2 微服务框架的演变"></a>3.4.2 <strong>微服务框架的演变</strong></h3><h4 id="3-4-2-1-小型机时代"><a href="#3-4-2-1-小型机时代" class="headerlink" title="3.4.2.1 小型机时代"></a><strong>3.4.2.1 小型机时代</strong></h4><p>第一个计算机网络诞生于1969年，也就是美军的阿帕网，阿帕网能够实现与其它计算机进行联机操作，但是早期仅仅是为了军事目的而服务</p>
+<p>2000年初，中国的网民大约890万，很多人都不知道互联网为何物，因此大多数服务业务单一且简单，采用典型的单机+数据库模式，所有的功能都写在一个应用里并进行集中部署</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjY4YjI0MzczZGExMjQzNTg5YzVmODM2MmU4Nzc4NzBfa0hiVTU1ekdmZk1mM0xTaDdFdXZ1ekJENG9SbmVVU0JfVG9rZW46WDU3UmJ5SXM0b3lqR3d4cTlaRGNBWExrbkNmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​       最古早的架构，简单的单机+数据库模型，所有功能全部在一个应用里面。</p>
+<h4 id="3-4-2-2-垂直拆分"><a href="#3-4-2-2-垂直拆分" class="headerlink" title="3.4.2.2 垂直拆分"></a><strong>3.4.2.2 垂直拆分</strong></h4><p>随着应用的日益复杂与多样化，开发者对系统的容灾，伸缩以及业务响应能力有了更高的要求，如果小型机和数据库中任何一个出现故障，整个系统都会崩溃，若某个板块的功能需要更新，那么整个系统都需要重新发布，显然，对于业务迅速发展的万物互联网时代是不允许的。</p>
+<p>如何保障可用性的同时快速响应业务的变化，需要将系统进行拆分，将上面的应用拆分出多个子应用。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OTIzYzI4ZDZiNzY1ZjU5MWVkZTc2MmFiNzIyOTM5ZGJfQ2hBNlZpdGhseFIwZDRORjJhNG5uZWNlSEpFaWRGdFdfVG9rZW46WkJzM2JDcUZxb2l0M1p4MjNuc2NCZEZKbkJmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p> 优点：应用跟应用解耦，系统容错提高了，也解决了独立应用发布的问题</p>
+<p> 应用垂直拆分解决了应用发布的问题，但是随着用户数量的增加，单机的计算能力依旧是杯水车薪、</p>
+<h4 id="3-4-2-3-集群化负载均衡架构"><a href="#3-4-2-3-集群化负载均衡架构" class="headerlink" title="3.4.2.3 集群化负载均衡架构"></a><strong>3.4.2.3 集群化负载均衡架构</strong></h4><p>用户量越来越大，就意味着需要更多的小型机，但是小型机价格昂贵，操作维护成本高。</p>
+<p>此时更优的选择是采用多台PC机部署同一个应用的方案，但是此时就需要对这些应用做负载均衡，因为客户端不知道请求会落到哪一个后端PC应用上的。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NzUyNDVhNmRiN2M1N2Q5MDUzZGRkZDZkZWRlZDRhZjhfaWJlYUtKbERIMWF6RDZDaE9jbW1kZkdPbms5SUYzU1VfVG9rZW46RkM3ZWJKNGZ6b1NCN1J4SGV0WmNwQmVLbm5jXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>负载均衡的思想：对外暴露一个统一的接口，根据用户的请求进行对应规则转发，同时负载均衡还可以做限流等等</p>
+<p>有了负载均衡之后，后端的应用可以根据流量的大小进行动态扩容，我们称为”水平扩展”</p>
+<p>优点：应用跟应用解耦，系统容错提高了，也解决了独立应用发布的问题，同时可以水平扩展来提供应用的并发量</p>
+<h4 id="3-4-2-4-服务化改造架构"><a href="#3-4-2-4-服务化改造架构" class="headerlink" title="3.4.2.4 服务化改造架构"></a><strong>3.4.2.4 服务化改造架构</strong></h4><p>虽然系统经过了垂直拆分，但是拆分之后发现在论坛和聊天室中有重复的功能，比如，用户注册、发邮件等等，一旦项目大了，集群部署多了，这些重复的功能无疑会造成资源浪费，所以会把重复功能抽取出来，名字叫”XX服务（Service）”</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MmY4NTEzZTRjM2NlMWQ4ODE1NmIxYzc3OTU2YzYyZTZfZnpBTVRiVHRKTW1idlhHamcxMVBjRTNHZVVIdlFwdmpfVG9rZW46SmkzdGJQOFdWb3pidWZ4WllSTWNLWGF0bjg1XzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>为了解决服务跟服务如何相互调用，需要一个程序之间的通信协议，所以就有了远程过程调用（RPC），作用就是让服务之间的程序调用变得像本地调用一样的简单</p>
+<p>优点：在前面的架构之上解决了业务重用的问题</p>
+<h4 id="3-4-2-5-服务治理与微服务架构"><a href="#3-4-2-5-服务治理与微服务架构" class="headerlink" title="3.4.2.5 服务治理与微服务架构"></a><strong>3.4.2.5 服务治理与微服务架构</strong></h4><p>服务治理要求：</p>
+<p> 1、当我们服务节点数几十上百的时候，需要对服务有动态的感知，引入了注册中心</p>
+<p> 2、当服务链路调用很长的时候如何实现链路的监控</p>
+<p> 3、单个服务的异常，如何能避免整条链路的异常（雪崩），需要考虑熔断、降级、限流</p>
+<p> 4、服务高可用：负载均衡</p>
+<ul>
+<li><strong>微服务时代：</strong></li>
+</ul>
+<p>​     </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MzVlODBhNWVjZjAwMjhiODJjMWI5ZjFlNmY5MGQ1Y2FfRGZzNVlzcEFFZHhzbGRKM0pyZUVZUHB2QWs5bUh1U0VfVG9rZW46VGhjRGJRTGlZb1Y3alR4ZlNoY2NBS1hwbnhmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​     微服务是在2012年提出的概念，微服务的希望的重点是一个服务只负责一个独立的功能。</p>
+<p>拆分原则，任何一个需求不会因为发布或者维护而影响到不相关的服务，一切可以做到独立部署运维。</p>
+<p>比如传统的“用户中心”服务，对于微服务来说，需要根据业务再次拆分，可能需要拆分成“买家服务”、“卖家服务”、“商家服务”等。</p>
+<p>​      典型代表：Spring Cloud，相对于传统分布式架构，SpringCloud使用的是HTTP作为RPC远程调用，配合上注册中心Eureka和API网关Zuul，可以做到细分内部服务的同时又可以对外暴露统一的接口，让外部对系统内部架构无感，此外Spring Cloud的config组件还可以把配置统一管理。</p>
+<ul>
+<li><strong>微服务时代的问题</strong></li>
+</ul>
+<p>（1）最初是为了业务而写代码，比如登录功能、支付功能等，到后面会发现要解决网络通信的问题，虽然有 Spring Cloud里面的组件帮我们解决了，但是细想一下它是怎么解决的？在业务代码里面加上spring cloud maven依赖，加上spring cloud组件注解，写配置，打成jar的时候还必须要把非业务的代码也要融合在一起，称为“侵入式框架”； </p>
+<p>（2）微服务中的服务支持不同语言开发，也需要维护不同语言和非业务代码的成本； </p>
+<p>（3）业务代码开发者应该把更多的精力投入到业务熟悉度上，而不应该是非业务上，Spring Cloud虽然能解决微服务领域的很多问题，但是学习成本还是较大的；  </p>
+<p>（4）互联网公司产品的版本升级是非常频繁的，为了维护各个版本的兼容性、权限、流量等，因为Spring </p>
+<p>Cloud是“代码侵入式的框架”，这时候版本的升级就注定要让非业务代码一起，一旦出现问题，再加上多语言之间的调用，工程师会非常痛苦； </p>
+<p>（5）其实我们到目前为止应该感觉到了，服务拆分的越细，只是感觉上轻量级解耦了，但是维护成本却越高了，那么怎么 办呢？</p>
+<h4 id="3-4-2-6-新时代的非侵入式服务网格架构"><a href="#3-4-2-6-新时代的非侵入式服务网格架构" class="headerlink" title="3.4.2.6 新时代的非侵入式服务网格架构"></a>3.4.2.6 新时代的非侵入式服务网格架构</h4><p>​    服务网格：指的是微服务网络应用之间的交互，随着规模和复杂性增加，服务跟服务调用错综复杂</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MzZhZWYyOTY3YWViNWU4ZDZhMjQyYmU0OGU5ZTI1ODlfV3NXUnRkbU9LYjM2YUNvNXRQaHNQTlZubnd2NVpZbnFfVG9rZW46WGFESmJsZVRqb3ZzSDh4eXl6OGMzTWszbjJmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      特点：</p>
+<p> 基础设施：服务网格是一种处理服务之间通信的基础设施层。</p>
+<p> 支撑云原生：服务网格尤其适用于在云原生场景下帮助应用程序在复杂的服务间可靠地传递请求。</p>
+<p> 网络代理：在实际使用中，服务网格一般是通过一组轻量级网络代理来执行治理逻辑的。</p>
+<p> 对应用透明：轻量网络代理与应用程序部署在一起，但应用感知不到代理的存在，还是使用原来的方式工作。</p>
+<h3 id="3-4-3-非侵入式微服务框架的优缺点"><a href="#3-4-3-非侵入式微服务框架的优缺点" class="headerlink" title="3.4.3 非侵入式微服务框架的优缺点"></a>3.4.3 <strong>非侵入式微服务框架的优缺点</strong></h3><p>​      非侵入式微服务架构是指那些不需要在业务代码中引入相关依赖或注解，或者不需要遵循特定的编程模型或规范的微服务架构。例如，Service Mesh、Cilium等都属于非侵入式微服务架构。它们的特点和优缺点如下：</p>
+<ul>
+<li>特点：<ul>
+<li>提供了代码无侵入、代理透明、开发运维分离等优势</li>
+<li>有利于提高微服务的灵活性和可移植性</li>
+<li>有利于适应云原生技术的变化和发展</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>降低了微服务开发的复杂度，减少了代码耦合</li>
+<li>规范和统一了微服务间的调用方式，方便了服务治理</li>
+<li>有利于提高微服务的性能和稳定性，减少资源消耗</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>增加了微服务部署和管理的难度，需要额外的工具和平台支持</li>
+<li>需要适应新的技术栈和架构模式，有一定的学习成本</li>
+<li>难以保证微服务间的数据一致性和事务性</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-5-主流非侵入式微服务框架简介"><a href="#3-5-主流非侵入式微服务框架简介" class="headerlink" title="3.5 主流非侵入式微服务框架简介"></a>3.5 主流非侵入式微服务框架简介</h2><p>非侵入式的微服务框架跟云原生结合比较紧密，由于无论什么项目，都需要落地在云原生上，因此，为了更好的适合云原生，很多基于云原生的非侵入式框架都发展出来了，以下会为大家介绍一些目前主流的非侵入式的框架</p>
+<h3 id="3-5-1-Service-Mesh-的背景"><a href="#3-5-1-Service-Mesh-的背景" class="headerlink" title="3.5.1 Service Mesh 的背景"></a>3.5.1 <strong>Service Mesh 的背景</strong></h3><p>​     Service Mesh的思想是将服务间通信的处理从应用层下沉到基础设施层，通过一组轻量级的网络代理（Sidecar）来实现服务间的可靠、安全、可观测的通信，而不需要应用感知。Service Mesh可以为微服务架构提供流量控制、策略、网络安全和可观测性等功能，并解决传统微服务框架的侵入性、多语言支持和老旧系统维护等问题。Service Mesh是一种适应云原生应用的新一代微服务架构。</p>
+<p>​     想要了解Service mesh，必须了解其是如何演化的，这里参考<a href="https://link.zhihu.com/?target=http://philcalcado.com/">Phil Calçado</a>的文章<a href="https://link.zhihu.com/?target=http://philcalcado.com/2017/08/03/pattern_service_mesh.html">《Pattern: Service Mesh》</a>让大家可以更好的理解，下面我们将从服务间通讯的角度来说明，服务网格为何需要出现：</p>
+<p>​    太初之时：不同的服务之间互相通信，抽象如下</p>
+<p>​    </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=YTY4NDRjMTlhMzYwZDZkNWY5YmU0ZDIzMGUxMjM5MTdfZVppcTRYMk96NnloYW9ZeVY1NXFONEEzbThubG94M2tfVG9rZW46R1ZFZmJ1R0Npb1doOWt4bUlYTGNCSTFlbnZnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p><strong>原始时代</strong>：然而现实远比想象的复杂，在实际情况中，通信需要底层能够传输字节码和电子信号的物理层来完成，在TCP协议出现之前，服务需要自己处理网络通信所面临的丢包、乱序、重试等一系列流控问题，因此服务实现中，除了业务逻辑外，还夹杂着对网络传输问题的处理逻辑。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWY5YTIzNDZhMDY4MTgyY2UxMTEwMDhkNjU3MWFhYTVfVTJMZ1g5UG5pd0tWQ2VzY3QxZWpiMmlTa0xCU3RXYXBfVG9rZW46WUZXVGJYTmw4bzRqVG14aXNhTmNxd0lZbm9mXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>   <strong>Tcp时代</strong>：为了避免每个服务都需要自己实现一套相似的网络传输处理逻辑，TCP协议出现了，它解决了网络传输中通用的流量控制问题，将技术栈下移，从服务的实现中抽离出来，成为操作系统网络层的一部分。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWM2MmFmMDMyODAxOWY5YjFkNzZlNTczZGUwNjI0N2JfbXQwck1NdHMwQllOMjJ3SE1oT3NWeVVWODRobDVBUnlfVG9rZW46SGRHVmJkbVhwb0RqTW94NzFtd2NMQXpZblFiXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      </p>
+<p>网络七层模型：应用层、表示层、会话层、传输层、网络层、数据链路层、物理层</p>
+<p> <strong>第一代微服务时代</strong>：在TCP出现之后，机器之间的网络通信不再是一个难题，这时分布式系统的微服务架构出现了。同时，为了解决分布式特有的通信问题，如熔断策略、负载均衡、服务发现、认证和授权、quota限制、trace和监控等等，微服务需要统一一套自己的通信语义，这样就产生了面向服务的微服务开发框架，如springcloud，这些框架实现了分布式系统通信需要的各种通用语义功能：如负载均衡和服务发现等，因此一定程度上屏蔽了这些通信细节，使得开发人员使用较少的框架代码就能开发出健壮的分布式系统。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NmMxZWY4NDQ3OTAzN2IxMmMwMzNjNWRiM2EzNzM3MGVfZDBNTWJyeEs2TzczN0dvdEZzUTNpQ3BZWDZ2amc4S0pfVG9rZW46VjYweWJKelZlb1BCbjB4TWNlR2N4T2xpbmNoXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p> <strong>第二代微服务时代：</strong>为了避免每个服务都需要自己实现一套分布式系统通信的语义功能，随着技术的发展，一些面向微服务架构的开发框架出现了，如Twitter的<a href="https://link.zhihu.com/?target=https://finagle.github.io/">Finagle</a>、Facebook的<a href="https://link.zhihu.com/?target=https://code.facebook.com/posts/1503205539947302">Proxygen</a>以及Spring Cloud等等，这些框架实现了分布式系统通信需要的各种通用语义功能：如负载均衡和服务发现等，因此一定程度上屏蔽了这些通信细节，使得开发人员使用较少的框架代码就能开发出健壮的分布式系统。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGY4Njk0Yzc2NTIzZjU5ZDJjNDg2NjFlOTFiMGUxMmNfdkg0NVc5V0x1RzU1R245ekdoWHZmQmJaUXNtZ3RKSUFfVG9rZW46TVZyTmIwY3N0b3RaMkN4eFF4emNTdU1UbkliXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p><strong>第一代服务网格时代</strong>：微服务模式看似完美，但开发人员很快又发现，它也存在一些本质问题：</p>
+<ul>
+<li>其一，虽然框架本身屏蔽了分布式系统通信的一些通用功能实现细节，但开发者却要花更多精力去掌握和管理复杂的框架本身，在实际应用中，去追踪和解决框架出现的问题也绝非易事；</li>
+<li>其二，开发框架通常只支持一种或几种特定的语言，回过头来看文章最开始对微服务的定义，一个重要的特性就是语言无关，但那些没有框架支持的语言编写的服务，很难融入面向微服务的架构体系，想因地制宜的用多种语言实现架构体系中的不同模块也很难做到；</li>
+<li>其三，框架以lib库的形式和服务联编，复杂项目依赖时的库版本兼容问题非常棘手，同时，框架库的升级也无法对服务透明，服务会因为和业务无关的lib库升级而被迫升级；</li>
+</ul>
+<p>​     因此以<strong>Linkerd，Envoy，NginxMesh</strong>为代表的代理模式（边车模式）应运而生，这就是第一代Service Mesh，它将分布式服务的通信抽象为单独一层，在这一层中实现负载均衡、服务发现、认证授权、监控追踪、流量控制等分布式系统所需要的功能，作为一个和服务对等的代理服务，和服务部署在一起，接管服务的流量，通过代理之间的通信间接完成服务之间的通信请求，这样上边所说的三个问题也迎刃而解。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWUxNWFjMmVhNWNhZTY1ODJkYjIwZTE1NDAwYzNmZWZfUDI2bXduUmtzeER3UUJTeW9HdkVkZklPR1NaY2psRGZfVG9rZW46UHVDcWJmYTRhb2ZaWnB4VThIeGNBMTk2bmNnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>如果我们从一个全局视角来看，就会得到如下部署图：</p>
+<p>​     </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=M2M5OWExN2I3NmM3NDI0YTdiMjBjZDQzOGQ3MDY0MWVfRWtCUkt1bjJlTzIzcXlMcmFhVnJYdlNOdVI0Q2VPRWhfVG9rZW46TFRIMGJBZWIzb0hpbnd4dWY4RWNETlRqbnljXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>边车模式设计思想</strong></li>
+</ul>
+<p>​    边车（Sidecar）模式设计思想的核心是将控制和逻辑分离，常用于我们在分布式架构中的逻辑和控制分离设计。迁移到我们的分布式架构中就是：我们不需要在服务中实现控制面上的东西，如监视、日志记录、限流、熔断、服务注册、协议适配转换等这些属于控制面上的东西，而只需要专注地做好和业务逻辑相关的代码，然后，由“边车”来实现这些与业务逻辑没有关系的控制功能。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWU0ODRmZDlkM2MwYjRmMTE5YTk4NDIyZGUxZWY2NjBfNDhIWXROd1lMYjdEdmNFekhHTHh1Yk05dU9vUHpTUG5fVG9rZW46QVJNT2JtUHVEb1ZWYlV4UU1kN2NlbDhNbkZmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NjgwMDA4ODNiYTBmN2E2OTA3MmZiZTA4ODZiMWIxNWFfTndQVFNqTHVMRDZLMUFGdG1tNU1vTzFMSWx1THRtenpfVG9rZW46SVBBaGJGcE5nb0xhS1R4ZzhSc2NCRTVibmxmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​    </p>
+<p>​      同样，sidecar独立运行的单机代理服务彼此建相对独立，缺乏一个对其进行统一管理的平台，也无法准确的监控不同sidecar的运行情况，因此，为了解决以上问题，出现了集中化的控制面板，所有的单机代理组件通过和控制面板交互进行网络拓扑策略的更新和单机数据的汇报。</p>
+<h4 id="Linkerd设计思想"><a href="#Linkerd设计思想" class="headerlink" title="Linkerd设计思想"></a><strong>Linkerd设计思想</strong></h4><p>​      </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MTNmMmZlZGI4YWFkY2U4YmM3MWQ2ODdlYjIzOGE3MjlfMjduMnM4VjlHUmo1VUN4dlF6ZjJqcVZYMUdvdHRoaFpfVG9rZW46UUJqdGJ1eEg2bzBhUld4ZDdGc2MyTUlPblFnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      </p>
+<p>​     跟我们前面sidecar很类似，以前的调用方式都是服务来调用服务，在Linkerd思想要求所有的流量都走sidecar，Linkerd帮业务人员屏蔽了通信细节，通信不需要侵入到业务代码内部了，这样业务开发者就专注于业务开发的本身。Linkerd在面世之后，迅速获得用户的关注，并在多个用户的生产环境上成功部署、运行。2017年，Linkerd加入<a target="_blank" rel="noopener" href="https://www.cncf.io/">CNCF</a>，随后宣布完成对千亿次生产环境请求的处理，紧接着发布了1.0版本，并且具备一定数量的商业用户，一时间风光无限，一直持续到Istio横空出世。</p>
+<p><strong>问题:</strong> 在早期的时候又要部署服务，又要部署sidecar，对于运维人员来说比较困难的，所以没有得到很好的发展，其实主要的 问题是Linkerd只是实现了数据层面的问题，但没有对其进行很好的管理。 </p>
+<ul>
+<li><strong>第二代Service Mesh</strong></li>
+</ul>
+<p>​       第一代Service Mesh由一系列独立运行的单机代理服务构成，为了提供统一的上层运维入口，演化出了集中式的控制面板，所有的单机代理组件通过和控制面板交互进行网络拓扑策略的更新和单机数据的汇报。这就是以Istio为代表的第二代Service Mesh。</p>
+<p>​     引入数据层面管理：</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=YTgyMGVkM2FmYmUxYmYyNTZmMjk1NzdhNmM0Mjc1YmVfa3FoQWlFdEZtMDNWMUVoUllBRXpDaVQzMFNUbExqVWZfVG9rZW46UXd1dGJUeWJLb1FSUnZ4aWxlUGMzc2JJbldlXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​     只看单机代理组件(数据面板)和控制面板的Service Mesh全局部署视图如下：</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OWRiOTc4MDA1MGNhN2U3YTJiMjczZDE0YjFiNjFmNWJfc3Z2ZXB1RDdnb1JwdnJHYnlqZGUya3JleFFHd2hnRkJfVG9rZW46WE9tV2JXWTdCb2pKcFV4UWROVWNmOTZBbmljXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      相信大家看过上面的技术演变后，一定能对服务网格（service mesh）有一个比较全面的了解，我们可以以其发明者Buoyant的CEO William Morgan对服务网格的概念做一个定义，也即是服务网格是一个基础设施层，用于处理服务间通信。云原生应用有着复杂的服务拓扑，服务网格保证请求在这些拓扑中可靠地穿梭。在实际应用当中，服务网格通常是由一系列轻量级的网络代理组成的，它们与应用程序部署在一起，但对应用程序透明。 </p>
+<p>​     总结一下，Service Mesh具有如下优点：</p>
+<ul>
+<li>屏蔽分布式系统通信的复杂性(负载均衡、服务发现、认证授权、监控追踪、流量控制等等)，服务只用关注业务逻辑；</li>
+<li>真正的语言无关，服务可以用任何语言编写，只需和Service Mesh通信即可；</li>
+<li>对应用透明，Service Mesh组件可以单独升级；</li>
+</ul>
+<p>当然，Service Mesh目前也面临一些挑战：</p>
+<ul>
+<li>Service Mesh组件以代理模式计算并转发请求，一定程度上会降低通信系统性能，并增加系统资源开销；</li>
+<li>Service Mesh组件接管了网络流量，因此服务的整体稳定性依赖于Service Mesh，同时额外引入的大量Service Mesh服务实例的运维和管理也是一个挑战；</li>
+</ul>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61901608">https://zhuanlan.zhihu.com/p/61901608</a></p>
+<h4 id="CNCF云原生组织发展跟介绍"><a href="#CNCF云原生组织发展跟介绍" class="headerlink" title="CNCF云原生组织发展跟介绍"></a>CNCF云原生组织发展跟介绍</h4><p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NDNlNjY5YThhNjU3YWEzNmUyYzhkYjc1YWEwZGJiNmVfMThsc2VuNzJ1dzRFZ0RkWkN0Qnl6ajRZMkQwNWRocHZfVG9rZW46QVVuc2IydDFJb1JYaWp4Y0hNbWNrUnRubnliXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li>CNCF</li>
+</ul>
+<p>​     CNCF 是一个开源软件基金会，致力于使云原生计算具有普遍性和可持续性。 云原生计算使用开源软件技术栈将应用程序部署为微服务，将每个部分打包到自己的容器中，并动态编排这些容器以优化资源利用率。 云原生技术使软件开发人员能够更快地构建出色的产品。</p>
+<ul>
+<li>Kubernetes</li>
+</ul>
+<p>​    从2014年6月由Google宣布开源，到2015年7月发布1.0这个正式版本并进入CNCF基金会，再到2018年3月从CNCF基金会正式毕业，迅速成为容器编排领域的标准，是开源历史上发展最快的项目之一。也是世界上最受欢迎的容器编排平台也是第一个 CNCF 项目。</p>
+<ul>
+<li>Linkerd</li>
+</ul>
+<p>Scala语言编写，运行在JVM中，Service Mesh名词的创造者 </p>
+<p>2016年01月15号，0.0.7发布 </p>
+<p>2017年01月23号，加入CNCF组织 </p>
+<p>2017年04月25号，1.0版本发布</p>
+<ul>
+<li>Istio</li>
+</ul>
+<p>Google、IBM、Lyft发布0.1版本</p>
+<p>Istio是开源的微服务管理、保护和监控框架。Istio为希腊语，意思是”起航“。</p>
+<ul>
+<li>Prometheus</li>
+</ul>
+<p>Prometheus 为云原生应用程序提供实时监控、警报包括强大的查询和可视化能力，并与许多流行的开源数据导入、导出工具集成。</p>
+<ul>
+<li>Jaeger</li>
+</ul>
+<p> Jaeger 是由 Uber 开发的分布式追踪系统，用于监控其大型微服务环境。 Jaeger 被设计为具有高度可扩展性和可用性，它具有现代 UI，旨在与云原生系统（如 OpenTracing、Kubernetes 和 Prometheus）集成。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.cncf.io/">https://www.cncf.io/</a></p>
+<h3 id="3-5-2-K8s"><a href="#3-5-2-K8s" class="headerlink" title="3.5.2 K8s"></a>3.5.2 K8s</h3><p>​     istio依托于k8s这个基础平台，因此在讲解istio之前，让我们一起简单了解一下什么是k8s。</p>
+<p>​     k8s 通常被描述为一个容器编排（container orchestration）平台。</p>
+<ul>
+<li><strong>容器</strong></li>
+</ul>
+<p>​     容器提供了一个轻量级的机制来隔离应用程序的环境。对于一个给定的应用程序，我们可以指定其配置和所需要安装的依赖，而不用担心其与同一台物理机上其他的应用程序发生冲突。我们将每个应用程序封装在容器镜像（container image）中，容器镜像可以可靠地运行在任何机器（只要机器有能力运行容器镜像）上，能够提供可移植的能力，即支持应用开发到部署的平滑过渡。此外，因为每个应用是独立的，不用担心环境冲突，所以在同一台物理机上可以部署多个容器，实现更高的资源（内存和 CPU）利用率，最终降低成本。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MTJlYjdmOTlkNzE5YjkwYTUzMTBlNzljNWRhYjliYTlfRk1zSVpsQk1ITU1RTnJweHBHZEhWQUg2T2hRQW1MUUpfVG9rZW46WktMemJ5UDhrb0RFaTJ4d2owWWNNTjRHbkpYXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MzRiMmMwNWE5Y2Y5MzMyNGE2OTM0ZjhkYmMyZjA1MTRfUG1WOWdCQ0QxcXg4UzVadmJuQTN5dnQ0cDdETVlvRXZfVG9rZW46SzBQNmJnV0Nab3dNQ1N4UFJVaGNNbnhIbkdiXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2VlNzA0Mzk5YTExZDBhYWQzMjU3NWEzMjI0N2NiNWJfdVlNZWg4dEtadU45d1lKWnh6TU4xRU1laGdVa2VnYXNfVG9rZW46R0xXbmJSVDBCb3pYV0Z4Vnc5VmNFblRtbk1hXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_28340727/article/details/128430351">https://blog.csdn.net/baidu_28340727/article/details/128430351</a></p>
+<ul>
+<li><strong>容器中的问题</strong></li>
+</ul>
+<p>​     比如，你的容器挂掉了会发生什么？或者更糟糕，容器发生错误，又或者机器运行容器失败会发生什么？要知道，容器是没有容错（fault tolerance）的能力。或者你有多个容器需要通信，如何在容器之间建立通信网络？当你启动、终止单个容器时，这种情况会发生什么变化？容器网络很容易变成一团混乱。最后，假设你的生产环境有多个机器，你将如何抉择使用哪个机器运行你的容器？</p>
+<p>​     k8s 管理着每个容器的全生命周期，如根据需要启动或停止容器。如果一个容器意外关闭，k8s 将会运行另一个容器快速代替它。除此之外，k8s 提供一种机制，可以让应用程序相互通信，即使在底层单个容器正在被创建或正在被销毁的时候。最后，给定要运行的一组容器和集群上的一组机器，k8s 检查每个容器并调度应用程序到最佳机器上。</p>
+<ul>
+<li><strong>k8s的基本架构</strong></li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ODhhZDQzNDVhZDk0OWJiMTUwNjkyOTc5ZmNjYWY0NDBfYnZjRXJrTnNoVXZGdGFRMXQ5bVFDMkQ4c0FjbXpMSGJfVG9rZW46QnRhcGJaMlJ0bzJ5RjN4SFJFZGN2MTlHbjhMXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>控制节点Master</strong></li>
+</ul>
+<p>​     K8S中的Master是集群控制节点，负责整个集群的管理和控制</p>
+<p><strong>ApiServer</strong> : 资源操作的唯一入口，接收用户输入的命令，提供认证、授权、API注册和发现等机制，其他模块通过API Server查询或修改数据，只有API Server才直接和etcd进行交互；</p>
+<p><strong>Scheduler</strong> : 负责集群资源调度，通过API Server的Watch接口监听新建Pod副本信息，按照预定的调度策略将Pod调度到相应的node节点上；</p>
+<p><strong>ControllerManager</strong> : K8S里所有资源对象的自动化控制中心，通过 api-server 提供的 restful 接口实时监控集群内每个资源对象的状态，发生故障时，导致资源对象的工作状态发生变化，就进行干预，尝试将资源对象从当前状态恢复为预期的工作状态，常见的 controller 有 Namespace Controller、Node Controller、Service Controller、ServiceAccount Controller、Token Controller、ResourceQuote Controller、Replication Controller等；</p>
+<p><strong>Etcd</strong> ： 是Kubernetes的存储状态的数据库（所有master的持续状态都存在etcd的一个实例中）</p>
+<ul>
+<li><strong>工作节点Node</strong></li>
+</ul>
+<p>​     Node是K8S集群中的工作负载节点，每个Node都会被Master分配一些工作负载，当某个Node宕机时，其上的工作负载会被Master自动转移到其他节点上</p>
+<p><strong>Kubelet</strong> : 负责维护容器的生命周期，即通过控制docker，控制Pod 的创建、启动、监控、重启、销毁等工作，处理Master节点下发到本节点的任务；</p>
+<p><strong>KubeProxy</strong> : 负责制定数据包的转发策略，并以守护进程的模式对各个节点的pod信息实时监控并更新转发规则，service收到请求后会根据kube-proxy制定好的策略来进行请求的转发，从而实现负载均衡，总的来说，负责为Service提供cluster内部的服务发现和负载均衡；</p>
+<p><strong>Docker</strong> : 负责节点上容器的各种操作；</p>
+<h3 id="3-5-3-K8s的核心组成"><a href="#3-5-3-K8s的核心组成" class="headerlink" title="3.5.3 K8s的核心组成"></a><strong>3.5.3 K8s的核心组成</strong></h3><p>学习kubernetes的核心，就是学习如何对集群上的Pod、Pod控制器、Service、存储等各种资源进行操作</p>
+<p><strong>Pod</strong>： kubernetes的最小控制单元，容器都是运行在pod中的，一个pod中可以有1个或者多个容器</p>
+<p><strong>Controller</strong>： 控制器，通过它来实现对pod的管理，比如启动pod、停止pod、伸缩pod的数量等等</p>
+<p><strong>Service</strong>： pod对外服务的统一入口，下面可以维护者同一类的多个pod</p>
+<p><strong>Label</strong>： 标签，用于对pod进行分类，同一类pod会拥有相同的标签</p>
+<p><strong>NameSpace</strong>： 命名空间，用来隔离pod的运行环境</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MGVhYWIwZjhjOWFmNjRlMmM0MWY2YjhmNWFlMzRkNDVfWk5UNmtHSGZPYlhqN3RmR2NtT1JwaGU2Yncwc0h6YzdfVG9rZW46SGxyRWJlSm1Bb1FJeVV4cEpIOWNQT0NKbk5oXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>K8s基本对象</strong></li>
+</ul>
+<p><strong>Pod</strong></p>
+<p>Pod 对象是 k8s 中基础对象，由一个或多个（紧密相关）容器组成，并且这些容器共享网络和文件系统。类似于容器，Pod 被设计成拥有短暂的生命周期，不会期望特定的 Pod 长期存在。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NTdjMjU2YWEzNWUzZTBiZTljNjk0ZmRkYTU5YTA2ZjdfanN0RGhUTHN1aEFnbVd5YzNLMlRqQ0ZWYkxqRnU1QzVfVG9rZW46S1NZc2J2dEFPb0REdGV4Qzl0cWMyUjU1bkRjXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>通常你不会显示地通过清单文件创建 Pod 对象，因为使用更高级的对象管理 Pod 对象通常更简单。</p>
+<p><strong>Deployment</strong></p>
+<p>Deployment 对象包含由模板和副本数（要运行的模板数量）定义的 Pod 集合。你可以设置具体的副本数，也可以使用单独的 k8s 资源（如 HPA），基于系统性能指标如 CPU 使用率来控制副本数。</p>
+<p>注意，Deployment 对象的控制器实际上会在背后创建 ReplicaSet 对象。然而，这对作为用户的你来说是抽象的。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NGU2N2Y2N2NlYTZjYmFlNmM2YTJmNWVkZDU1NmQ1ZWFfMW5vdDc0cm5yY21HVmYwRzBKMTBPU29DWXEzWEFjeEJfVG9rZW46UVl6cGJCTkdJb0twRE14ck9kRWNVWGxHbmliXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>虽然你不能依赖任何单一 Pod 永远的保持运行，但你可以依赖这样一个事实：集群总是能保证 n 个 Pod 运行中（其中 n 是你定义的副本数）。如果我们有一个 Deployment，其副本数为 10，并且其中 3 个 Pod 由于机器故障而崩溃，这 3 个 Pod 将会在集群中的其他机器上被调度运行起来。因此，Deployment 是最适合无状态应用程序使用，Pod 能够随时被替换而不破坏其他东西。</p>
+<p>Deployment 还允许我们指定在拥有新的容器镜像时，我们希望如何进行更新。这篇<a href="https://link.zhihu.com/?target=https://blog.container-solutions.com/kubernetes-deployment-strategies">文章</a>很好地概述了不同操作选项。如果我们想覆盖默认值，我们可以在 Deployment 对象 <code>spec</code> 下附加一个 <code>strategy</code> 字段。 k8s 将确保优雅地关闭正在运行中的旧容器镜像的 Pod 并启动运行新容器镜像的新 Pod。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=M2QzNTVkMTM3N2JkN2JiMWYyZDcxZTFhZDExNTRkYzRfa29UYzQ3aExNWXF3QWhsUGM4VEN4QUE0ZWR0eEkwU3lfVG9rZW46Qkg1T2J0Q2pUb3ExUW54RXdSWmN4MG5lbjhmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>下面 的 YAML 文件提供了一个带有注释的示例，展示了如何定义 Deployment 对象。</p>
+<p><strong>为了让 k8s 知道应用程序大概的负载，我们还应该在 Pod 模板清单中提供<strong><strong>资源限制</strong></strong>参数。</strong></p>
+<ul>
+<li><strong>deployment文件详解</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: apps/v1  # 指定api版本，此值必须在kubectl api-versions中  </span><br><span class="line">kind: Deployment  # 指定创建资源的角色/类型   </span><br><span class="line">metadata:  # 资源的元数据/属性 </span><br><span class="line">  name: demo  # 资源的名字，在同一个namespace中必须唯一</span><br><span class="line">  namespace: <span class="keyword">default</span> # 部署在哪个namespace中</span><br><span class="line">  labels:  # 设定资源的标签</span><br><span class="line">    app: demo</span><br><span class="line">    version: stable</span><br><span class="line">spec: # 资源规范字段</span><br><span class="line">  replicas: <span class="number">1</span> # 声明副本数目</span><br><span class="line">  revisionHistoryLimit: <span class="number">3</span> # 保留历史版本</span><br><span class="line">  selector: # 选择器</span><br><span class="line">    matchLabels: # 匹配标签</span><br><span class="line">      app: demo</span><br><span class="line">      version: stable</span><br><span class="line">  strategy: # 策略</span><br><span class="line">    rollingUpdate: # 滚动更新</span><br><span class="line">      maxSurge: <span class="number">30</span>% # 最大额外可以存在的副本数，可以为百分比，也可以为整数</span><br><span class="line">      maxUnavailable: <span class="number">30</span>% # 示在更新过程中能够进入不可用状态的 Pod 的最大值，可以为百分比，也可以为整数</span><br><span class="line">    type: RollingUpdate # 滚动更新策略</span><br><span class="line">  template: # 模版</span><br><span class="line">    metadata: # 资源的元数据/属性 </span><br><span class="line">      annotations: # 自定义注解列表</span><br><span class="line">        sidecar.istio.io/inject: <span class="string">&quot;false&quot;</span> # 自定义注解名字</span><br><span class="line">      labels: # 设定资源的标签</span><br><span class="line">        app: demo</span><br><span class="line">        version: stable</span><br><span class="line">    spec: # 资源规范字段</span><br><span class="line">      containers:</span><br><span class="line">      - name: demo # 容器的名字   </span><br><span class="line">        image: demo:v1 # 容器使用的镜像地址   </span><br><span class="line">        imagePullPolicy: IfNotPresent # 每次Pod启动拉取镜像策略，三个选择 Always、Never、IfNotPresent</span><br><span class="line">                                      # Always，每次都检查；Never，每次都不检查（不管本地是否有）；IfNotPresent，如果本地有就不检查，如果没有就拉取 </span><br><span class="line">        resources: # 资源管理</span><br><span class="line">          limits: # 最大使用</span><br><span class="line">            cpu: 300m # CPU，<span class="number">1</span>核心 = 1000m</span><br><span class="line">            memory: 500Mi # 内存，1G = 1024Mi</span><br><span class="line">          requests:  # 容器运行时，最低资源需求，也就是说最少需要多少资源容器才能正常运行</span><br><span class="line">            cpu: 100m</span><br><span class="line">            memory: 100Mi</span><br><span class="line">        livenessProbe: # pod 内部健康检查的设置</span><br><span class="line">          httpGet: # 通过httpget检查健康，返回<span class="number">200</span>-<span class="number">399</span>之间，则认为容器正常</span><br><span class="line">            path: /healthCheck # URI地址</span><br><span class="line">            port: <span class="number">8080</span> # 端口</span><br><span class="line">            scheme: HTTP # 协议</span><br><span class="line">            # host: <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> # 主机地址</span><br><span class="line">          initialDelaySeconds: <span class="number">30</span> # 表明第一次检测在容器启动后多长时间后开始</span><br><span class="line">          timeoutSeconds: <span class="number">5</span> # 检测的超时时间</span><br><span class="line">          periodSeconds: <span class="number">30</span> # 检查间隔时间</span><br><span class="line">          successThreshold: <span class="number">1</span> # 成功门槛</span><br><span class="line">          failureThreshold: <span class="number">5</span> # 失败门槛，连接失败<span class="number">5</span>次，pod杀掉，重启一个新的pod</span><br><span class="line">        readinessProbe: # Pod 准备服务健康检查设置</span><br><span class="line">          httpGet:</span><br><span class="line">            path: /healthCheck</span><br><span class="line">            port: <span class="number">8080</span></span><br><span class="line">            scheme: HTTP</span><br><span class="line">          initialDelaySeconds: <span class="number">30</span></span><br><span class="line">          timeoutSeconds: <span class="number">5</span></span><br><span class="line">          periodSeconds: <span class="number">10</span></span><br><span class="line">          successThreshold: <span class="number">1</span></span><br><span class="line">          failureThreshold: <span class="number">5</span></span><br><span class="line">        #也可以用这种方法   </span><br><span class="line">        #exec: 执行命令的方法进行监测，如果其退出码不为<span class="number">0</span>，则认为容器正常   </span><br><span class="line">        #  command:   </span><br><span class="line">        #    - cat   </span><br><span class="line">        #    - /tmp/health   </span><br><span class="line">        #也可以用这种方法   </span><br><span class="line">        #tcpSocket: # 通过tcpSocket检查健康  </span><br><span class="line">        #  port: number </span><br><span class="line">        ports:</span><br><span class="line">          - name: http # 名称</span><br><span class="line">            containerPort: <span class="number">8080</span> # 容器开发对外的端口 </span><br><span class="line">            protocol: TCP # 协议</span><br><span class="line">      imagePullSecrets: # 镜像仓库拉取**</span><br><span class="line">        - name: harbor-certification</span><br><span class="line">      affinity: # 亲和性调试</span><br><span class="line">        nodeAffinity: # 节点亲和力</span><br><span class="line">          requiredDuringSchedulingIgnoredDuringExecution: # pod 必须部署到满足条件的节点上</span><br><span class="line">            nodeSelectorTerms: # 节点满足任何一个条件就可以</span><br><span class="line">            - matchExpressions: # 有多个选项，则只有同时满足这些逻辑选项的节点才能运行 pod</span><br><span class="line">              - key: beta.kubernetes.io/arch</span><br><span class="line">                operator: In</span><br><span class="line">                values:</span><br><span class="line">                - amd64</span><br></pre></td></tr></table></figure>
+
+<p><strong>Service</strong></p>
+<p>k8s 为每个 Pod 都分配了一个唯一的 IP 地址，可以使用这个 IP 来通信。但是，由于 Pod 的生命周期是短暂的，所以很难把流量发送到指定的容器上。例如，让我们考虑上面提到的 Deployment，有 10 个 Pod 运行，为机器学习模型提供 REST 接口服务。作为 Deployment 的一部分，这些运行的 Pod 可以随时更改，我们如何与服务器可靠地通信？这时 Service 对象映入眼帘。k8s 的 Service 提供了一个稳定的端点（endpoint），它可以用来将流量定向到所需的 Pod 上，即使底层 Pod 由于更新、扩展和故障而发生变化。Service 基于我们在 Pod 清单文件中元数据（metadata）中定义的标签（是键值对）知道应该向哪些 Pod 发送流量。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ODUxNGMwNTE0MWIxMGI4MzEwYTFiZWQ0MDFmMTdiNzNfWW9KNm9CcXl1Rlk3R0taWXNFOFZINWV3MWIzQ252aURfVG9rZW46Sk1MQWIwd25kb3pGRUx4SVM0dmNIMXE1bnBoXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>上图展示了 Service 通过 app&#x3D;ml-model 标签将流量打到所有健康的 Pod 上。</p>
+<p>以下 YAML 文件提供了一个示例，展示了我们如何根据早期的 Deployment 示例包装成 Service。</p>
+<ul>
+<li><strong>service的详解</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1 # 指定api版本，此值必须在kubectl api-versions中 </span><br><span class="line">kind: Service # 指定创建资源的角色/类型 </span><br><span class="line">metadata: # 资源的元数据/属性</span><br><span class="line">  name: demo # 资源的名字，在同一个namespace中必须唯一</span><br><span class="line">  namespace: <span class="keyword">default</span> # 部署在哪个namespace中</span><br><span class="line">  labels: # 设定资源的标签</span><br><span class="line">    app: demo</span><br><span class="line">spec: # 资源规范字段</span><br><span class="line">  type: ClusterIP # ClusterIP 类型</span><br><span class="line">  ports:</span><br><span class="line">    - port: <span class="number">8080</span> # service 端口</span><br><span class="line">      targetPort: http # 容器暴露的端口</span><br><span class="line">      protocol: TCP # 协议</span><br><span class="line">      name: http # 端口名称</span><br><span class="line">  selector: # 选择器</span><br><span class="line">    app: demo</span><br></pre></td></tr></table></figure>
+
+<p>   参考资料：<a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/home/">https://kubernetes.io/zh-cn/docs/home/</a></p>
+<p>​     简单部署一个Nginx</p>
+<p>​     配置示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">apiVersion<span class="punctuation">:</span> v1</span><br><span class="line">kind<span class="punctuation">:</span> Service</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  labels<span class="punctuation">:</span></span><br><span class="line">    app<span class="punctuation">:</span> nginx-test</span><br><span class="line">  name<span class="punctuation">:</span> nginx-test</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  ports<span class="punctuation">:</span></span><br><span class="line">  - name<span class="punctuation">:</span> http</span><br><span class="line">    port<span class="punctuation">:</span> <span class="number">80</span></span><br><span class="line">    protocol<span class="punctuation">:</span> TCP</span><br><span class="line">    targetPort<span class="punctuation">:</span> <span class="number">80</span></span><br><span class="line">  selector<span class="punctuation">:</span></span><br><span class="line">    app<span class="punctuation">:</span> nginx-test</span><br><span class="line">  type<span class="punctuation">:</span> ClusterIP</span><br><span class="line">---</span><br><span class="line">apiVersion<span class="punctuation">:</span> apps/v1</span><br><span class="line">kind<span class="punctuation">:</span> Deployment</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  generation<span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line">  labels<span class="punctuation">:</span></span><br><span class="line">    app<span class="punctuation">:</span> nginx-test</span><br><span class="line">    app.kubernetes.io/instance<span class="punctuation">:</span> release-name</span><br><span class="line">    app.kubernetes.io/managed-by<span class="punctuation">:</span> Tiller</span><br><span class="line">    app.kubernetes.io/name<span class="punctuation">:</span> nginx-test</span><br><span class="line">    helm.sh/chart<span class="punctuation">:</span> nginx<span class="number">-0.1</span><span class="number">.0</span></span><br><span class="line">    version<span class="punctuation">:</span> <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">  name<span class="punctuation">:</span> nginx-test</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  progressDeadlineSeconds<span class="punctuation">:</span> <span class="number">600</span></span><br><span class="line">  replicas<span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">  revisionHistoryLimit<span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line">  selector<span class="punctuation">:</span></span><br><span class="line">    matchLabels<span class="punctuation">:</span></span><br><span class="line">      app<span class="punctuation">:</span> nginx-test</span><br><span class="line">      app.kubernetes.io/name<span class="punctuation">:</span> nginx-test</span><br><span class="line">  strategy<span class="punctuation">:</span></span><br><span class="line">    rollingUpdate<span class="punctuation">:</span></span><br><span class="line">      maxSurge<span class="punctuation">:</span> <span class="number">25</span>%</span><br><span class="line">      maxUnavailable<span class="punctuation">:</span> <span class="number">25</span>%</span><br><span class="line">    type<span class="punctuation">:</span> RollingUpdate</span><br><span class="line">  template<span class="punctuation">:</span></span><br><span class="line">    metadata<span class="punctuation">:</span></span><br><span class="line">      annotations<span class="punctuation">:</span></span><br><span class="line">        kmse.jekins.build<span class="punctuation">:</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">      creationTimestamp<span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span></span><br><span class="line">      labels<span class="punctuation">:</span></span><br><span class="line">        app<span class="punctuation">:</span> nginx-test</span><br><span class="line">        app.kubernetes.io/instance<span class="punctuation">:</span> release-name</span><br><span class="line">        app.kubernetes.io/name<span class="punctuation">:</span> nginx-test</span><br><span class="line">        version<span class="punctuation">:</span> <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">    spec<span class="punctuation">:</span></span><br><span class="line">      containers<span class="punctuation">:</span></span><br><span class="line">      - image<span class="punctuation">:</span> hub.kce.ksyun.com/ksyun-public/nginx<span class="punctuation">:</span>latest</span><br><span class="line">        imagePullPolicy<span class="punctuation">:</span> Always</span><br><span class="line">        name<span class="punctuation">:</span> kce-nginx</span><br><span class="line">        resources<span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">        securityContext<span class="punctuation">:</span></span><br><span class="line">          privileged<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">        terminationMessagePath<span class="punctuation">:</span> /dev/termination-log</span><br><span class="line">        terminationMessagePolicy<span class="punctuation">:</span> File</span><br><span class="line">      dnsPolicy<span class="punctuation">:</span> ClusterFirst</span><br><span class="line">      imagePullSecrets<span class="punctuation">:</span></span><br><span class="line">      - name<span class="punctuation">:</span> ksyunregistrykey</span><br><span class="line">      restartPolicy<span class="punctuation">:</span> Always</span><br><span class="line">      schedulerName<span class="punctuation">:</span> default-scheduler</span><br><span class="line">      securityContext<span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line">      terminationGracePeriodSeconds<span class="punctuation">:</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>pod的创建流程</strong></li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=M2ZlZDE4MmY2MDRhOTY5Y2VmMTA0NmY5MThkOWM1ZDlfM3RPVnpWZWFjbmRNejV5a0JrSzF1RHJFandyWG1RVGVfVG9rZW46RlVvSGJQSUhYb1NlbE94N1RFa2NSMXVDbnloXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>1、客户端提交创建请求，可以通过API Server的Restful API，也可以使用kubectl命令行工具。支持的数据类型包括JSON和YAML。</p>
+<p>2、API Server处理用户请求，存储Pod数据到etcd。</p>
+<p>3、调度器通过API Server查看未绑定的Pod。尝试为Pod分配主机。</p>
+<p>4、过滤主机 (调度预选)：调度器用一组规则过滤掉不符合要求的主机。比如Pod指定了所需要的资源量，那么可用资源比Pod需要的资源量少的主机会被过滤掉。</p>
+<p>5、主机打分(调度优选)：对第一步筛选出的符合要求的主机进行打分，在主机打分阶段，调度器会考虑一些整体优化策略，比如把容一个Replication Controller的副本分布到不同的主机上，使用最低负载的主机等。</p>
+<p>6、选择主机：选择打分最高的主机，进行binding操作，结果存储到etcd中。</p>
+<p>7、kubelet根据调度结果执行Pod创建操作： 绑定成功后，scheduler会调用APIServer的API在etcd中创建一个boundpod对象，描述在一个工作节点上绑定运行的所有pod信息。运行在每个工作节点上的kubelet也会定期与etcd同步boundpod信息，一旦发现应该在该工作节点上运行的boundpod对象没有更新，则调用Docker API创建并启动pod内的容器。</p>
+<p>​     在整个生命周期中，Pod会出现5种状态（相位），分别如下：</p>
+<p>挂起(Pending): apiserver已经创建了pod资源对象，但它尚未被调度完成或者仍处于下载镜像的过程中</p>
+<p>运行中(Running): pod已经被调度至某节点，并且所有容器都已经被kubelet创建完成</p>
+<p>成功(Succeeded): pod中的所有容器都已经成功终止并且不会被重启</p>
+<p>失败(Failed): 所有容器都已经终止，但至少有一个容器终止失败，即容器返回了非0值的退出状态</p>
+<p>未知(Unknown): apiserver无法正常获取到pod对象的状态信息，通常由网络通信失败所导致</p>
+<ul>
+<li><strong>应用持久化存储（pv 以及 pvc）</strong></li>
+</ul>
+<p>​       而Persistent Volume则是一个K8S资源对象，它是独立于Pod的，能单独创建。Persistent Volume 不与Pod发生直接关系，而是通过 Persistent Volume Claim(PVC) 来与Pod绑定关系。在定义Pod时，为Pod指定一个PVC，Pod在创建时会根据PVC要求，从现有集群的PV中，选择一个合适的PV绑定，或动态建立一个新的PV，再与其进行绑定。</p>
+<p><strong>Persistent Volume(PV)：</strong>用于定义各种存储资源的配置信息，一个PV对应一个volume，定义一个PV内容包括了 存储类型、存储大小和访问模式等。</p>
+<p><strong>Persistent Volume Claim(PVC)：</strong>描述对PV的一个请求。请求信息包含存储大小、访问模式等。PVC只会选择符合自己要求的PV进行绑定，然后在定义pod时指定使用哪个PVC就可以了。</p>
+<ul>
+<li><strong>pvc以及pv的绑定原理</strong></li>
+</ul>
+<p>​      PVC和PV的设计，其实跟面向对象的思想完全一致，PVC是面向对象编程中的接口，PV是接口具体的实现。</p>
+<p>用户只需通过PVC来声明自己的存储需求，比如存储大小、可读写权限等，类似于调用接口函数并传入属性参数，而不用关心后端存储实现细节，这些都交由运维人员统一管理即可。</p>
+<p>​      Pod是直接与PVC绑定关系，再根据PVC存储需求，去找到对应PV。PVC只有绑定了PV之后才能被Pod使用。</p>
+<p>PersistentVolume Controller 会不断地查看当前每一个PVC，是不是已经处于Bound（已绑定）状态。如果不是，那它就会遍历所有的、可用的PV，并尝试将其与这个PVC进行绑定。这样，Kubernetes就可以保证用户提交的每一个PVC，只要有合适的PV出现，它就能够很快进入绑定状态。</p>
+<p>​       在提交PVC后，是如何找到对应的PV：先根据PVC的accessModes匹配出PV列表，再根据PVC的Capacity、StorageClassName、Label Selector进一步筛选PV。如果满足条件的PV有多个，选择PV的size最小的，accessmodes列表最短的PV，也即最小适合原则。</p>
+<p>pvc跟pv的绑定规则：</p>
+<p>VolumeMode：被消费PV的VolumeMode需要和PVC一致。</p>
+<p>AccessMode：被消费PV的AccessMode需要和PVC一致。</p>
+<p>StorageClassName：如果PVC定义了此字段，则PV也必须有对应字段才能进行绑定。</p>
+<p>LabelSelector：通过标签（labels）匹配的方式从PV列表中选择合适的PV绑定。</p>
+<p>Size：被消费PV的capacity必须大于或等于PVC的存储容量需求才能被绑定。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: pv2</span><br><span class="line">spec:</span><br><span class="line">  nfs: # 存储类型，与底层真正存储对应</span><br><span class="line">  capacity:  # 存储能力，目前只支持存储空间的设置</span><br><span class="line">    storage: 2Gi</span><br><span class="line">  accessModes:  # 访问模式</span><br><span class="line">  storageClassName: # 存储类别</span><br><span class="line">  persistentVolumeReclaimPolicy: # 回收策略</span><br><span class="line"></span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: pvc</span><br><span class="line">  namespace: dev</span><br><span class="line">spec:</span><br><span class="line">  accessModes: # 访问模式</span><br><span class="line">  selector: # 采用标签对PV选择</span><br><span class="line">  storageClassName: # 存储类别</span><br><span class="line">  resources: # 请求空间</span><br><span class="line">    requests:</span><br><span class="line">      storage: 5Gi</span><br></pre></td></tr></table></figure>
+
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_19676401/article/details/121145651">https://blog.csdn.net/qq_19676401/article/details/121145651</a></p>
+<ul>
+<li><strong>kubect相关命令</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo yum remove -y  kubectl #卸载kubectl</span><br><span class="line">传入 kubectl 文件</span><br><span class="line">chmod +x ./kubectl</span><br><span class="line">mv ./kubectl /usr/local/bin/kubectl</span><br></pre></td></tr></table></figure>
+
+<p>kubectl的安装：<a target="_blank" rel="noopener" href="https://www.kancloud.cn/zatko/kubernetes_k8s/2290707">https://www.kancloud.cn/zatko/kubernetes_k8s/2290707</a></p>
+<p>kubectl 命令的语法如下：</p>
+<p><strong>kubectl [command] [TYPE] [NAME] [flags]</strong></p>
+<p>kubectl命令中，指定执行什么操作（command，如create,delete,describe ,get ,apply 等）指定什么类型资源对象（type）指定此类型的资源对象名称（name）指定可选参数（flags）</p>
+<p><strong>查看pod，nodee，service，endpoints，secret等信息</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get 组件名      #例如kubectl get pod</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看资源状态，比如有一组deployment内的pod没起来，一般用于pod调度过程出现的问题排查</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe pod pod名    #先用kubectl get pod查看</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看node节点或者是pod资源（<strong><strong>cpu</strong></strong>，内存资源）使用情况</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl top 组件名     #例如kubectl top node  kubectl top pod</span><br></pre></td></tr></table></figure>
+
+<p><strong>进入pod内部</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec -ti pod名 /bin/bash   #先用kubectl get pod查看</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除pod</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod -n</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看集群健康状态</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get cs</span><br></pre></td></tr></table></figure>
+
+<p><strong>基于 pod.yaml 定义的名称删除指定资源</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete -f pod.yaml</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看容器的日志</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs -f &lt;pod-name&gt; # 实时查看日志</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建资源</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f ./my-manifest.yaml </span><br></pre></td></tr></table></figure>
+
+<p><strong>批量删除异常pod</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n  namespace | grep OutOfcpu | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | xargs kubectl delete pod -n  namespace</span><br></pre></td></tr></table></figure>
+
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/langzi6/article/details/125139698">https://blog.csdn.net/langzi6/article/details/125139698</a></p>
+<ul>
+<li><strong>演示挂载nginx的index文件</strong></li>
+</ul>
+<p><strong>使用docker直接挂载</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps # 找到对应的容器</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NzUyNjM3YmYwOTA5YTJiZWZhYzcyYWQyYzA5YWIxYTBfcHo4Q1VwTEY2Q0REOWFMMDU0UUVqbVc2ZzJiTG1PNjhfVG9rZW46TW5IVWJ3OFBhb203ZUJ4b0dBZWNnc0libmdQXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp index.html 178888c944e8:/root/index.html #docker cp 命令将文件传入</span><br><span class="line">kubectl exec -it nginx-test-57df77cb76-pg4db /bin/bash #进入pod中查看是否挂载到对应目录</span><br></pre></td></tr></table></figure>
+
+<p><strong>直接挂载本地节点</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx-test</span><br><span class="line">  name: nginx-test</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: <span class="number">80</span></span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: <span class="number">80</span></span><br><span class="line">  selector:</span><br><span class="line">    app: nginx-test</span><br><span class="line">  type: ClusterIP</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  generation: <span class="number">4</span></span><br><span class="line">  labels:</span><br><span class="line">    app: nginx-test</span><br><span class="line">    app.kubernetes.io/instance: release-name</span><br><span class="line">    app.kubernetes.io/managed-by: Tiller</span><br><span class="line">    app.kubernetes.io/name: nginx-test</span><br><span class="line">    helm.sh/chart: nginx-<span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">    version: <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">  name: nginx-test</span><br><span class="line">spec:</span><br><span class="line">  progressDeadlineSeconds: <span class="number">600</span></span><br><span class="line">  replicas: <span class="number">1</span></span><br><span class="line">  revisionHistoryLimit: <span class="number">10</span></span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx-test</span><br><span class="line">      app.kubernetes.io/name: nginx-test</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:</span><br><span class="line">      maxSurge: <span class="number">25</span>%</span><br><span class="line">      maxUnavailable: <span class="number">25</span>%</span><br><span class="line">    type: RollingUpdate</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      annotations:</span><br><span class="line">        kmse.jekins.build: <span class="string">&quot;1&quot;</span></span><br><span class="line">      creationTimestamp: <span class="literal">null</span></span><br><span class="line">      labels:</span><br><span class="line">        app: nginx-test</span><br><span class="line">        app.kubernetes.io/instance: release-name</span><br><span class="line">        app.kubernetes.io/name: nginx-test</span><br><span class="line">        version: <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">    spec:</span><br><span class="line">      volumes:</span><br><span class="line">      - name: index</span><br><span class="line">        hostPath:</span><br><span class="line">          path: /root/campus/index/index.html</span><br><span class="line">      nodeName: <span class="number">10.0</span><span class="number">.0</span><span class="number">.188</span></span><br><span class="line">      containers:</span><br><span class="line">      - image: hub.kce.ksyun.com/ksyun-<span class="keyword">public</span>/nginx:latest</span><br><span class="line">        imagePullPolicy: Always</span><br><span class="line">        name: kce-nginx</span><br><span class="line">        resources: &#123;&#125;</span><br><span class="line">        securityContext:</span><br><span class="line">          privileged: <span class="literal">false</span></span><br><span class="line">        terminationMessagePath: /dev/termination-log</span><br><span class="line">        terminationMessagePolicy: File</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: index</span><br><span class="line">          mountPath: /usr/share/nginx/html/index.html</span><br><span class="line">      dnsPolicy: ClusterFirst</span><br><span class="line">      imagePullSecrets:</span><br><span class="line">      - name: ksyunregistrykey</span><br><span class="line">      restartPolicy: Always</span><br><span class="line">      schedulerName: <span class="keyword">default</span>-scheduler</span><br><span class="line">      securityContext: &#123;&#125;</span><br><span class="line">      terminationGracePeriodSeconds: <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>使用<strong><strong>pvc</strong></strong>、pv进行挂载</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  finalizers:</span><br><span class="line">  - kubernetes.io/pv-protection</span><br><span class="line">  labels:</span><br><span class="line">    type: local</span><br><span class="line">  name: nginx-pv</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">  - ReadWriteOnce</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 10Gi</span><br><span class="line">  hostPath:</span><br><span class="line">    path: /root/campus/index</span><br><span class="line">    type: <span class="string">&quot;&quot;</span></span><br><span class="line">  nodeAffinity:</span><br><span class="line">    required:</span><br><span class="line">      nodeSelectorTerms:</span><br><span class="line">      - matchExpressions:</span><br><span class="line">        - key: usedFor</span><br><span class="line">          operator: In</span><br><span class="line">          values:</span><br><span class="line">          - nginx</span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  storageClassName: manual</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  finalizers:</span><br><span class="line">  - kubernetes.io/pvc-protection</span><br><span class="line">  labels:</span><br><span class="line">    app.kubernetes.io/managed-by: Helm</span><br><span class="line">  name: nginx-pvc</span><br><span class="line">  namespace: nginx</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">  - ReadWriteOnce</span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 8Gi</span><br><span class="line">  storageClassName: manual</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  volumeName: nginx-pv</span><br><span class="line">  </span><br><span class="line">  apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx-test</span><br><span class="line">  name: nginx-test</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - name: http</span><br><span class="line">    port: <span class="number">80</span></span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: <span class="number">80</span></span><br><span class="line">  selector:</span><br><span class="line">    app: nginx-test</span><br><span class="line">  type: ClusterIP</span><br><span class="line">---</span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  generation: <span class="number">4</span></span><br><span class="line">  labels:</span><br><span class="line">    app: nginx-test</span><br><span class="line">    app.kubernetes.io/instance: release-name</span><br><span class="line">    app.kubernetes.io/managed-by: Tiller</span><br><span class="line">    app.kubernetes.io/name: nginx-test</span><br><span class="line">    helm.sh/chart: nginx-<span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">    version: <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">  name: nginx-test</span><br><span class="line">spec:</span><br><span class="line">  progressDeadlineSeconds: <span class="number">600</span></span><br><span class="line">  replicas: <span class="number">1</span></span><br><span class="line">  revisionHistoryLimit: <span class="number">10</span></span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: nginx-test</span><br><span class="line">      app.kubernetes.io/name: nginx-test</span><br><span class="line">  strategy:</span><br><span class="line">    rollingUpdate:</span><br><span class="line">      maxSurge: <span class="number">25</span>%</span><br><span class="line">      maxUnavailable: <span class="number">25</span>%</span><br><span class="line">    type: RollingUpdate</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      annotations:</span><br><span class="line">        kmse.jekins.build: <span class="string">&quot;1&quot;</span></span><br><span class="line">      creationTimestamp: <span class="literal">null</span></span><br><span class="line">      labels:</span><br><span class="line">        app: nginx-test</span><br><span class="line">        app.kubernetes.io/instance: release-name</span><br><span class="line">        app.kubernetes.io/name: nginx-test</span><br><span class="line">        version: <span class="number">0.1</span><span class="number">.0</span></span><br><span class="line">    spec:</span><br><span class="line">      volumes:</span><br><span class="line">      - name: index</span><br><span class="line">        persistentVolumeClaim:</span><br><span class="line">          claimName: nginx-pvc</span><br><span class="line">      containers:</span><br><span class="line">      - image: hub.kce.ksyun.com/ksyun-<span class="keyword">public</span>/nginx:latest</span><br><span class="line">        imagePullPolicy: Always</span><br><span class="line">        name: kce-nginx</span><br><span class="line">        resources: &#123;&#125;</span><br><span class="line">        securityContext:</span><br><span class="line">          privileged: <span class="literal">false</span></span><br><span class="line">        terminationMessagePath: /dev/termination-log</span><br><span class="line">        terminationMessagePolicy: File</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - mountPath: /root</span><br><span class="line">          name: index</span><br><span class="line">      dnsPolicy: ClusterFirst</span><br><span class="line">      imagePullSecrets:</span><br><span class="line">      - name: ksyunregistrykey</span><br><span class="line">      restartPolicy: Always</span><br><span class="line">      schedulerName: <span class="keyword">default</span>-scheduler</span><br><span class="line">      securityContext: &#123;&#125;</span><br><span class="line">      terminationGracePeriodSeconds: <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-4-k8s与Istio"><a href="#3-5-4-k8s与Istio" class="headerlink" title="3.5.4 k8s与Istio"></a>3.5.4 k8s与Istio</h3><ul>
+<li><strong>Istio是Kubernetes的好帮手</strong></li>
+</ul>
+<p>​    </p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NGU0NzBlYTAwMjNhNjcwNzA1NzBlNGY3ZDU5MGFkNmRfbWN0eXgyWE9oTDlqMDl3UVNIeEhXWm9CaWRVUWVmRG1fVG9rZW46TWVnMmJNcTVtb1ZwbFB4dzI3dmN0ZngzblJjXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​     从场景来看，Kubernetes已经提供了非常强大的应用负载的部署、升级、扩容等运行管理能力。Kubernetes 中的 Service 机制也已经可以做服务注册、服务发现和负载均衡，支持通过服务名访问到服务实例。</p>
+<p>​     从微服务的工具集观点来看，Kubernetes本身是支持微服务的架构，在Pod中部署微服务很合适，也已经解决了微服务的互访互通问题，但对服务间访问的管理如服务的熔断、限流、动态路由、调用链追踪等都不在Kubernetes的能力范围内。因此，istio横空出世，完成了这个任务</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MzMwMzEzMDZkNWUwMWQ3MDU1N2VkNGViNjhlM2NiMzBfbnhFOGNkVG93NEZUOTVEeGRHdDEzNXA3czZWb0NPWFhfVG9rZW46UmRxb2I5VXZob1JRMWN4enQ5NGN2T1BrbnNCXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>k8s为istio提供地基</strong></li>
+</ul>
+<p>​      1.提供统一的数据面</p>
+<p>​      数据面Sidecar运行在Kubernetes的Pod里，作为一个Proxy和业务容器部署在一起。在服务网格的定义中要求应用程序在运行的时感知不到Sidecar的存在。而基于Kubernetes的一个 Pod 多个容器的优秀设计使得部署运维。对用户透明，用户甚至感知不到部署 Sidecar的过程。用户还是用原有的方式创建负载，通过 Istio 的自动注入服务，可以自动给指定的负载注入Proxy。如果在另一种环境下部署和使用Proxy，则不会有这样的便利。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MGE1MDc2YzQxNDZhNmIzYTI5MDdlNGVhNTRmN2E3MWZfMXZYcGpZblZLUTAzd0FlTHBJdDVBdFo2bGREWEZMUU5fVG9rZW46TG93ZWJzeHd0b3k0aXB4M2c3VGNFUWUzbjlmXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​    2.提供域名访问机制，省去类似Eureka的注册中心</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OGM3ZWRmZjY4YTY1ODhiNTYwMGNmMmNlMDAwNjA4NzNfRktPQ3Brc2lReWJCMFcycmJEMVkwREh6WGwxVFZCdFVfVG9rZW46UzAyY2JzYkV0b0pwa2J4eXJJemNZMVBlbm1iXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>   3.基于Kubernetes CRD描述规则</p>
+<p>   Istio的所有路由规则和控制策略都是通过 Kubernetes CRD实现的，因此各种规则策略对应的数据也被存储在 Kube-apiserver 中，不需要另外一个单独的 APIServer 和后端的配置管理。所以，可以说Istio的APIServer就是Kubernetes的APIServer，数据也自然地被存在了对应Kubernetes的etcd中。</p>
+<p>Kubernetes CRD:CRD 本身是一种 Kubernetes 内置的资源类型，即自定义资源的定义，用于描述用户定义的资源是什么样子。</p>
+<h3 id="3-5-5-Istio"><a href="#3-5-5-Istio" class="headerlink" title="3.5.5 Istio"></a>3.5.5 Istio</h3><p>​    Istio是一个提供连接、保护、控制以及观测功能的开放平台，通过提供完整的非侵入式的微服务治理解决方案，能够很好的解决云原生服务的管理、网络连接以及安全管理等服务网络治理问题。Istio 的架构从逻辑上分为数据平面和控制平面。数据平面由一组智能代理（Envoy）组成，被部署为 Sidecar。这些代理负责协调和控制微服务之间的所有网络通信。它们还收集和报告所有网格流量的遥测数据。控制平面管理并配置代理来进行流量路由。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NmNhY2ZjY2UzYzVjNDFiY2E5YWM3ODY2YjMwZGYxNTVfdUFCYkRsbUZhU3pHTnB3TVAzYWhKUFEwektRaXE2QnVfVG9rZW46TUNCR2JNVkU3b3YyWWd4bldXUmNvY1hsbk1oXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​    下面我们来看一下istio的架构</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OTcxOWQ2NDhmMzljYmQwMGRiZDg3MzFkYTgyOWEyMmJfa2pPMTFYV0ZZM0prWm9SaVluWmFyNXp5aXdpTHZOT3VfVG9rZW46TEs3bWJYTEpab2VkMFJ4c0Z5eWNES2xQbkpnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      其主要数据平面以及控制平面组成</p>
+<ul>
+<li>数据平面：以一组Sidecar的方式部署的Evnoy组成，所有进入和流出服务的流量都会被Envoy拦截，并与控制面进行交互，根据配置执行相应的通信功能。Envoy之所以称之为智能，是因为Envoy相对于其他代理来说有着更丰富的治理能力和灵活的配置方式，并且支持各种插件可用于扩展流量治理能力，并生成遥测数据。</li>
+<li>控制平面：Pilot、Citadel、Galley组成的一个单进程、多模块的istiod组成了istio的控制平面。其中Pilot组件负责提供服务发现、智能路由（如金丝雀发布）和弹性功能（如超时、重试）；Citadel负责安全，管理密钥和证书；Galley负责对配置的验证和处理等功能。Istiod作为一种全新的设计，构建了一套标准的控制面规范，主要提供服务发现、规则配置和证书管理等功能，并向数据平面传递这些信息。</li>
+<li><strong>istio的特征</strong></li>
+<li><strong>连接</strong>：对网格内部的服务之间的调用所产生的流量进行智能管理，并以此为基础，为微服务的部署、测试和升级等操作提供有力保障。</li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OTJjYWVjMTQ3ZGY5ZmJjYzZhN2Y2OTM5MjAyOWMwODFfeHdDUEUwRm4zbW5JdEJnaHhWWEQzdDd3NHhGekNHa0xfVG9rZW46WkVvSmJqVDRpb3Q5T3N4NDJWZGM1bUR4bnBnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<ul>
+<li><strong>安全</strong>：为网格内部的服务之间的调用提供认证、加密和鉴权支持，在不侵入代码的情况下，加固现有服务，提高其安全性。</li>
+</ul>
+<p>安全提供网格内部的安全保障，就应具备服务通信加密、服务身份认证和服务访问控制（授权和鉴权）功能。</p>
+<p>上述功能通常需要数字证书的支持，这就隐藏了对CA的需求，即需要完成证书的签发、传播和更新业务。</p>
+<p>除了上述核心要求，还存在对认证失败的处理、外部证书（统一 CA）的接入等相关支撑内容。</p>
+<ul>
+<li><strong>策略</strong>：在控制平面定制策略，并在服务中实施。</li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MmMyYjA4YjAzMzAyNTNjODc3YTE2MDY4MjY4Y2IwMWJfS2NTR1dWalNnMDhTeDNFY2RHRnFBQm5yTlllS2J2YlBfVG9rZW46Wko4S2JhaGxLb1BqNjF4SFdqZGNRZHdDbkdIXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>Istio 通过可动态插拔、可扩展的策略实现访问控制、速率限制、配额管理等功能使得资源在消费者之间公平分配</p>
+<ul>
+<li><strong>观察</strong>：对服务之间的调用进行跟踪和测量，获取服务的状态信息。</li>
+</ul>
+<p>动态获取服务运行数据和输出，提供强大的调用链、监控和调用日志收集输出的能力。配合可视化工具，可方便运维人员了解服务的运行状况，发现并解决问题。</p>
+<h3 id="3-5-6-Istio架构详解"><a href="#3-5-6-Istio架构详解" class="headerlink" title="3.5.6 Istio架构详解"></a>3.5.6 Istio架构详解</h3><p>Istio的架构，分为控制平面和数据面平两部分。</p>
+<ul>
+<li>数据平面：由一组智能代理（[Envoy]）组成，被部署为 sidecar。这些代理通过一个通用的策略和遥测中心传递和控制微服务之间的所有网络通信。</li>
+<li>控制平面：管理并配置代理来进行流量路由。此外，控制平面配置 Mixer 来执行策略和收集遥测数据。</li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=OTMyMTU4ODY0NTczNjY0ZmRlZjkzNWMyM2UyMDk5ZGVfY1lZbDVKU1Y2ekU5eGRybDNRZmh6RkNNdUJibFhiQXFfVG9rZW46V2FueWJGTTdQb0huR0R4bzdzM2NrRDRvbnNoXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>Pilot：提供服务发现功能和路由规则</p>
+<p>Mixer：策略控制，比如：服务调用速率限制</p>
+<p>Citadel：起到安全作用，比如：服务跟服务通信的加密</p>
+<p>Sidecar&#x2F;Envoy: 代理，处理服务的流量</p>
+<p>（1）<strong>自动注入</strong>：（由架构图得知前端服务跟后端服务都有envoy,我们这里以前端服务envoy为例说明）指在创建应用程序时自动注入 Sidecar代理。那什么情况下会自动注入你？在 Kubernetes场景下创建 Pod时，Kube-apiserver调用管理平面组件的 Sidecar-Injector服务，然后会自动修改应用程序的描述信息并注入Sidecar。在真正创建Pod时，在创建业务容器的同时在Pod中创建Sidecar容器。</p>
+<p>总结：会在pod里面自动生产一个代理，业务服务无感知</p>
+<p>（2）<strong>流量拦截</strong>：在 Pod 初始化时设置 iptables 规则，当有流量到来时，基于配置的iptables规则拦截业务容器的入口流量和出口流量到Sidecar上。但是我们的应用程序感知不到Sidecar的存在，还以原本的方式进行互相访问。在架构图中，流出前端服务的流量会被 前端服务侧的 Envoy拦截，而当流量到达后台服务时，入口流量被后台服务V1&#x2F;V2版本的Envoy拦截。</p>
+<p>总结：Pilot提供了服务发现功能，调用方需要到Pilot组件获取提供者服务信息</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ODgwMWI5OGMzZGI0MTExMjRjMjhlNTRlYmM3M2RlZDlfeFpTMDQ5b0xIVlBKNjBrZ1oyUm9PUEZBb05WemNDWlpfVG9rZW46SUJyWGJwR002b3NYbWV4TUQ1ZGNpanFUbjRjXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>（3）<strong>服务发现</strong>：前端服务怎么知道后端服务的服务信息呢？这个时候就需要服务发现了，所以服务发起方的 Envoy 调用控制面组件 Pilot 的服务发现接口获取目标服务的实例列表。在架构图中，前端服务内的 Envoy 通过 控制平面Pilot 的服务发现接口得到后台服务各个实例的地址，为访问做准备。</p>
+<p>总结：Pilot提供了服务发现功能，调用方需要到Pilot组件获取提供者服务信息</p>
+<p>（4）<strong>负载均衡</strong>：数据面的各个Envoy从Pilot中获取后台服务的负载均衡衡配置，并执行负载均衡动作，服务发起方的Envoy（前端服务envoy）根据配置的负载均衡策略选择服务实例，并连接对应的实例地址。</p>
+<p>总结：Pilot也提供了负载均衡功能，调用方根据配置的负载均衡策略选择服务实例</p>
+<p>（5）<strong>流量治理</strong>：Envoy 从 Pilot 中获取配置的流量规则，在拦截到 入口 流量和出口 流量时执行治理逻辑。比如说，在架构图中，前端服务的 Envoy 从 Pilot 中获取流量治理规则，并根据该流量治理规则将不同特征的流量分发到后台服务的v1或v2版本。当然，这只是Istio流量治理的一个场景，Istio支持更丰富的流量治理能力。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZGYyOTU2NTM2OTc0ZTJjNzMzOGQ2YTFiNzQwZjE0N2RfS3lUWFZWd3VOblljcDBIc3E0emJ5QjZMeDFHSFllb29fVG9rZW46UHdHa2JYb09Lb25hSGl4TmRDV2NQRmlrbjJlXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>总结：Pilot也提供了路由转发规则</p>
+<p>（6）<strong>访问安全</strong>：在服务间访问时通过双方的Envoy进行双向认证和通道加密，并基于服务的身份进行授权管理。在架构图中，Pilot下发安全相关配置，在前端模块服务和后端服务的Envoy上自动加载证书和密钥来实现双向认证，其中的证书和密钥由另一个控制平面组件Citadel维护。</p>
+<p>总结：Citadel维护了服务代理通信需要的证书和密钥</p>
+<p>（7）<strong>服务遥测</strong>：在服务间通信时，通信双方的Envoy都会连接控制平面组件Mixer上报访问数据，并通过Mixer将数据转发给对应的监控后端。比如说，在架构图中，前端模块服务对后端服务的访问监控指标、日志和调用链都可以通过Mixer收集到对应的监控后端。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=NDZjZDJiM2QzYjNlNzQ2ODNiOTNjMDQxOWE5NjZkZmVfOXNhY3BWbGttS0RZQW5xeGtuYTQySnoxOG5FSUEyQlBfVG9rZW46RmtvT2JobWJnb0k5ZVp4YjhPMWNRenJvblVoXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>总结：Mixer组件可以收集各个服务上的日志，从而可以进行监控</p>
+<p>（8）<strong>策略执行</strong>：在进行服务访问时，通过Mixer连接后端服务来控制服务间的访问，判断对访问是放行还是拒绝。在架构图中，数据面在转发服务的请求前调用Mixer接口检查是否允许访问，Mixer 会做对应检查，给代理（Envoy）返回允许访问还是拒绝, 比如：可以对前端模块服务到后台服务的访问进行速率控制。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=MDJiOTEwYmJhMTc2NTdiMjU4ZDNmMmQ2ZDk3NjM3MmRfUmUxcHU2WFg2ZmtGb1VVOHduQnF5Tlk0VWZHdDdYN2xfVG9rZW46UmhwR2JxYlBQb0lUSmx4NU5kUGNUV2x1bkdkXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>总结：Mixer组件可以对服务速率进行控制（也就是限流）</p>
+<p>（9）<strong>外部访问</strong>：在架构图中，外部服务通过Gateway访问入口将流量转发到服务前端服务内的Envoy组件，对前端服务的负载均衡和一些流量治理策略都在这个Gateway上执行。</p>
+<p><strong>总结：</strong>这里总结在以上过程中涉及的动作和动作主体，可以将其中的每个过程都抽象成一句话：服务调用双方的Envoy代理拦截流量，并根据控制平面的相关配置执行相应的服务治理动作，这也是Istio的数据平面和控制平面的配合方式。</p>
+<h3 id="3-5-7-Sidecar的注入方式"><a href="#3-5-7-Sidecar的注入方式" class="headerlink" title="3.5.7 Sidecar的注入方式"></a>3.5.7 Sidecar的注入方式</h3><p>​      sidecar的注入方式分为手动注入以及自动注入：</p>
+<p>​      手动注入：使用istioctl命令即可进行手动注入</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">istioctl kube-inject -f samples/sleep/sleep.yaml | kubectl apply -f -</span><br></pre></td></tr></table></figure>
+
+<p>​      自动注入：在命名空间上设置<code>istio-injection = enabled</code>标签并且启用了注入Webhook时，在该名称空间中创建的所有新容器都将自动添加一个sidecar。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label ns default istio-injection=enabled</span><br></pre></td></tr></table></figure>
+
+<p>​      自动注入原理：在 Kubernetes环境下，根据自动注入配置，Kube-apiserver在拦截到 Pod创建的请求时，会调用自动注入服务 istio-sidecar-injector 生成 Sidecar 容器的描述并将其插入原 Pod的定义中，这样，在创建的 Pod 内, 除了包括业务容器，还包括 Sidecar容器。这个注入过程对用户透明，用户使用原方式创建工作负载。</p>
+<ul>
+<li><strong>Envoy</strong></li>
+</ul>
+<p>​       Envoy是Lyft开源的一个C++实现的代理（Proxy），和Nginx及HAProxy类似，可代理L3&#x2F;L4层和L7层。代理是它最核心和基础的功能，它也是服务网格框架的Sidecar。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=M2ZmMjNiZDc4ZDdmMjMwMWY2MzkyNzJlOWI0ZjEwOTBfUGlKcUh2RDNNWk1zc2JVWUR4UEZqV1JYUTRXalZJNElfVG9rZW46WUcxd2JEbVVJb3pOVll4ZzFpSGNzQ2FCbkNiXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​    </p>
+<p>如上图所示，Envoy 作为 Sidecar 使用时，需要和服务部署在同一台机器或者 Pod 中，用户访问其他服务时，流量会被自动劫持到 Envoy 中。</p>
+<p>下面结合一个具体的例子来讲解。下图是 Productpage 服务通过 HTTP 协议，调用 review 服务的过程。</p>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjQzZjlhNjMyN2FkZjI0NGNjMTAwNGNmNDBiMDNlMTJfMWZIeWdyNWl1VHIwUkc1TndnOTdvWnQwS2VWZUtHVWRfVG9rZW46VDRZU2JTdlNWb3doVE54V1pjV2NUUm1abktnXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>​      通过 Iptables 对流量进行劫持，将 Productpage 访问 Reviews 的流量转发到 Envoy 的出流量 15001 端口上。Envoy 先根据 virtual_hosts 进行匹配，再通过路由匹配，发现路由对应的 Cluster，通过服务发现找到 Cluster 对应的 EndPoint，将流量转发到 10.40.0.15:9080 的 Pod 上。Reviews 的 Pod 通过 Iptables 对流量进行劫持，将流量劫持到 Envoy 的入流量端口 15006 上。Envoy 将本地流量转发到对应的本地地址 127.0.0.1:9080，这里不需要对流量进行识别，因为流量被转发到入流量端口 15006 上，这个端口的配置用于本地流量的转发。</p>
+<p>到这里整个 Sidecar 的流量出入过程就结束了。出入流量都经由 Envoy，最终被正确的转发到了 Reviews 的 Pod 上面。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/muzinan110/p/17060326.html">https://www.cnblogs.com/muzinan110/p/17060326.html</a></p>
+<h3 id="3-5-8-Istio的Ingress-Gateway"><a href="#3-5-8-Istio的Ingress-Gateway" class="headerlink" title="3.5.8 Istio的Ingress Gateway"></a>3.5.8 Istio的Ingress Gateway</h3><p>​      ingressgateway 就是入口处的 Gateway，从网格外访问网格内的服务就是通过这个Gateway进行的。ingressgateway比较特别，是一个Loadbalancer类型的Service，不同于其他服务组件只有一两个端口，ingressgateway 开放了一组端口，这些就是网格内服务的外部访问端口。</p>
+<ul>
+<li>istio ingressgateway是通过一个Gateway资源来配置的，它可以指定暴露的端口、协议、主机等信息，但不包含任何流量路由配置。</li>
+<li>istio ingressgateway的流量路由配置是通过一个VirtualService资源来实现的，它可以指定匹配的条件和目标服务，以及一些高级的功能，如故障注入、重试、超时等。</li>
+<li>istio ingressgateway可以利用istio的其他功能，如安全、可观察性、流量控制等。 例如，istio ingressgateway可以实现TLS终止、JWT认证、指标收集、分布式追踪等。</li>
+</ul>
+<p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZmFjYzIzMDkwYTMzYWZhNTNjY2U1NTEwNmQ0ZmZiYWVfVXI4bnc4eWl5Rzg2MVdUd3RybHJ0ZXlEbzFXZXc0czZfVG9rZW46SG1pMWJDbDNMb2E4ZG94M0tScGNFTHdnblNkXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>由于gateway暴露了一个端口，外部的请求就可以根据这个端口把请求发给gateway了然后由gateway把请求分发给网格内部的pod上     </p>
+<p>ingressgateway的配置示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># gw和vs配置</span><br><span class="line">apiVersion<span class="punctuation">:</span> networking.istio.io/v1alpha3</span><br><span class="line">kind<span class="punctuation">:</span> Gateway</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> bookinfo-gateway</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  selector<span class="punctuation">:</span></span><br><span class="line">    istio<span class="punctuation">:</span> ingressgateway # use istio default controller</span><br><span class="line">  servers<span class="punctuation">:</span></span><br><span class="line">  - port<span class="punctuation">:</span></span><br><span class="line">      number<span class="punctuation">:</span> <span class="number">443</span>            # 使用gw-ingress的<span class="number">443</span>端口</span><br><span class="line">      name<span class="punctuation">:</span> https_test_name  # 这个名称可以随意写</span><br><span class="line">      protocol<span class="punctuation">:</span> HTTPS</span><br><span class="line">    hosts<span class="punctuation">:</span></span><br><span class="line">    - <span class="string">&quot;bookinfo.com&quot;</span></span><br><span class="line">    tls<span class="punctuation">:</span></span><br><span class="line">      mode<span class="punctuation">:</span> SIMPLE</span><br><span class="line">      serverCertificate<span class="punctuation">:</span> /etc/istio/ingressgateway-certs/tls.crt</span><br><span class="line">      privateKey<span class="punctuation">:</span> /etc/istio/ingressgateway-certs/tls.key</span><br><span class="line">---</span><br><span class="line">apiVersion<span class="punctuation">:</span> networking.istio.io/v1alpha3</span><br><span class="line">kind<span class="punctuation">:</span> VirtualService</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> bookinfo</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  hosts<span class="punctuation">:</span></span><br><span class="line">  - <span class="string">&quot;*&quot;</span></span><br><span class="line">  gateways<span class="punctuation">:</span></span><br><span class="line">  - bookinfo-gateway</span><br><span class="line">  http<span class="punctuation">:</span></span><br><span class="line">  - match<span class="punctuation">:</span></span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        exact<span class="punctuation">:</span> /productpage</span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        prefix<span class="punctuation">:</span> /static</span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        exact<span class="punctuation">:</span> /login</span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        exact<span class="punctuation">:</span> /logout</span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        prefix<span class="punctuation">:</span> /api/v1/products</span><br><span class="line">    route<span class="punctuation">:</span></span><br><span class="line">    - destination<span class="punctuation">:</span></span><br><span class="line">        host<span class="punctuation">:</span> productpage.istio.svc.cluster.local</span><br><span class="line">        port<span class="punctuation">:</span></span><br><span class="line">          number<span class="punctuation">:</span> <span class="number">9080</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-9-Istio网关Gateway概述"><a href="#3-5-9-Istio网关Gateway概述" class="headerlink" title="3.5.9 Istio网关Gateway概述"></a>3.5.9 <strong>Istio网关Gateway概述</strong></h3><p>​      Istio网关Gateway是一个负责处理南北向流量的组件，它通常会暴露服务网格内部的服务，以便外部的请求能够访问到服务网格中的服务。Istio网关Gateway支持多种协议，包括HTTP、HTTPS和GRPC等。</p>
+<p>​      在Istio网关Gateway中，每个服务器都包含一个或多个端口，每个端口都定义了一种协议和相应的配置。Istio网关Gateway还可以定义多个TLS证书，以便对传输的数据进行加密和解密。</p>
+<p>​      在配置Istio网关Gateway时，我们需要指定其所使用的负载均衡算法和服务发现机制。Istio网关Gateway支持多种服务发现机制，包括Kubernetes服务发现、Consul服务发现和Eureka服务发现等。</p>
+<p>​      gateway 配置示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apiVersion<span class="punctuation">:</span> networking.istio.io/v1alpha3</span><br><span class="line">kind<span class="punctuation">:</span> Gateway</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  generation<span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">  name<span class="punctuation">:</span> my-gateway</span><br><span class="line">  namespace<span class="punctuation">:</span> test</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  selector<span class="punctuation">:</span></span><br><span class="line">    istio<span class="punctuation">:</span> ingressgateway</span><br><span class="line">  servers<span class="punctuation">:</span></span><br><span class="line">  - hosts<span class="punctuation">:</span></span><br><span class="line">    - my.gateway.com</span><br><span class="line">    port<span class="punctuation">:</span></span><br><span class="line">      name<span class="punctuation">:</span> http</span><br><span class="line">      number<span class="punctuation">:</span> <span class="number">9080</span></span><br><span class="line">      protocol<span class="punctuation">:</span> HTTP</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-10-Istio-虚拟服务（Virtual-service"><a href="#3-5-10-Istio-虚拟服务（Virtual-service" class="headerlink" title="3.5.10 Istio 虚拟服务（Virtual service)"></a>3.5.10 Istio 虚拟服务（Virtual service)</h3><p>​       在istion中，虚拟服务（Virtual service）和目标规则（destination rule）是流量路由功能的关键组成部分。在Istio所提供的基本连接和发现基础上，通过虚拟服务，能够将请求路由到Istio网格中的特定服务。每个虚拟服务由一组路由规则组成，这些路由规则使Istio能够将虚拟服务的每个给定请求匹配到网格内特定的目标地址。</p>
+<p>​     virtual service 配置示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">apiVersion<span class="punctuation">:</span> networking.istio.io/v1beta1</span><br><span class="line">kind<span class="punctuation">:</span> VirtualService</span><br><span class="line">metadata<span class="punctuation">:</span></span><br><span class="line">  name<span class="punctuation">:</span> my-virtualService</span><br><span class="line">  namespace<span class="punctuation">:</span> test</span><br><span class="line">spec<span class="punctuation">:</span></span><br><span class="line">  gateways<span class="punctuation">:</span></span><br><span class="line">  - my-gateway</span><br><span class="line">  hosts<span class="punctuation">:</span></span><br><span class="line">  - my.gateway.com</span><br><span class="line">  http<span class="punctuation">:</span></span><br><span class="line">  - match<span class="punctuation">:</span></span><br><span class="line">    - uri<span class="punctuation">:</span></span><br><span class="line">        prefix<span class="punctuation">:</span> /</span><br><span class="line">    route<span class="punctuation">:</span></span><br><span class="line">    - destination<span class="punctuation">:</span></span><br><span class="line">        host<span class="punctuation">:</span> nginx-test</span><br><span class="line">        port<span class="punctuation">:</span></span><br><span class="line">          number<span class="punctuation">:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>演示配置流量分发并通过公网访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: Gateway</span><br><span class="line">metadata:</span><br><span class="line">  generation: <span class="number">3</span></span><br><span class="line">  name: nginx-gateway</span><br><span class="line">  namespace: nginx</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    istio: ingressgateway</span><br><span class="line">  servers:</span><br><span class="line">  - hosts:</span><br><span class="line">    - my.gateway.com</span><br><span class="line">    port:</span><br><span class="line">      name: http</span><br><span class="line">      number: <span class="number">80</span></span><br><span class="line">      protocol: HTTP</span><br><span class="line">      </span><br><span class="line"> </span><br><span class="line">apiVersion: networking.istio.io/v1beta1</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-vs</span><br><span class="line">  namespace: nginx</span><br><span class="line">spec:</span><br><span class="line">  gateways:</span><br><span class="line">  - nginx-gateway</span><br><span class="line">  hosts:</span><br><span class="line">  - my.gateway.com</span><br><span class="line">  http:</span><br><span class="line">  - match:</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /</span><br><span class="line">    route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: nginx-test.<span class="keyword">default</span>.svc.cluster.local</span><br><span class="line">        port:</span><br><span class="line">          number: <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-11-Istio-目的规则（DestinationRule"><a href="#3-5-11-Istio-目的规则（DestinationRule" class="headerlink" title="3.5.11 Istio 目的规则（DestinationRule)"></a>3.5.11 Istio 目的规则（DestinationRule)</h3><p>​      DestinationRule，根据字面意思即目标规则，我们可以理解VirtualService为流量的路由，那么DestinationRule则为流量路由之后的去处。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: DestinationRule</span><br><span class="line">metadata:</span><br><span class="line">  name: bookinfo-ratings</span><br><span class="line">spec:</span><br><span class="line">  # 含义同VirtualService中destination的host字段一致。</span><br><span class="line">  host: ratings.prod.svc.cluster.local</span><br><span class="line">  # 流量策略，包括负载均衡、连接池策略、异常点检查等</span><br><span class="line">  trafficPolicy:</span><br><span class="line">    # 负载均衡策略，支持随机负载均衡 /按权重负载均衡 /最少请求负载均衡 / hash轮训等</span><br><span class="line">    loadBalancer:</span><br><span class="line">      simple: LEAST_CONN</span><br><span class="line">    # 连接池策略</span><br><span class="line">    connectionPool:</span><br><span class="line">      # tcp连接池设置</span><br><span class="line">      tcp:</span><br><span class="line">        maxConnections: <span class="number">100</span></span><br><span class="line">        connectTimeout: 30ms</span><br><span class="line">        tcpKeepalive:</span><br><span class="line">          time: 7200s</span><br><span class="line">          interval: 75s</span><br><span class="line">      http:</span><br><span class="line">        http2MaxRequests: <span class="number">1000</span></span><br><span class="line">        maxRequestsPerConnection: <span class="number">10</span></span><br><span class="line">    # 异常点检查</span><br><span class="line">    outlierDetection:</span><br><span class="line">      consecutiveErrors: <span class="number">7</span></span><br><span class="line">      interval: 5m</span><br><span class="line">      baseEjectionTime: 15m</span><br><span class="line">    # tls设置</span><br><span class="line">    tls:</span><br><span class="line">      mode: MUTUAL</span><br><span class="line">      clientCertificate: /etc/certs/myclientcert.pem</span><br><span class="line">      privateKey: /etc/certs/client_private_key.pem</span><br><span class="line">      caCertificates: /etc/certs/rootcacerts.pem</span><br><span class="line">  # 服务端点集合</span><br><span class="line">  subsets:</span><br><span class="line">  # subset名称可以用于路由规则中的流量拆分，与virtualService的subset的引用</span><br><span class="line">  - name: testversion</span><br><span class="line">  # 使用标签对服务注册表中的服务端点进行筛选</span><br><span class="line">    labels:</span><br><span class="line">      version: v3</span><br><span class="line">    trafficPolicy:</span><br><span class="line">      loadBalancer:</span><br><span class="line">        simple: ROUND_ROBIN</span><br></pre></td></tr></table></figure>
+
+<p>参考资料：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360592235?utm_id=0">https://zhuanlan.zhihu.com/p/360592235?utm_id=0</a></p>
+<ul>
+<li><strong>如何将nginx的端口通过istioEngress转发到公网</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: networking.istio.io/v1beta1</span><br><span class="line">kind: VirtualService</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-vs</span><br><span class="line">  namespace: nginx</span><br><span class="line">spec:</span><br><span class="line">  gateways:</span><br><span class="line">  - nginx-gateway</span><br><span class="line">  hosts:</span><br><span class="line">  - my.gateway.com</span><br><span class="line">  http:</span><br><span class="line">  - match:</span><br><span class="line">    - uri:</span><br><span class="line">        prefix: /</span><br><span class="line">    route:</span><br><span class="line">    - destination:</span><br><span class="line">        host: nginx-test.<span class="keyword">default</span>.svc.cluster.local</span><br><span class="line">        port:</span><br><span class="line">          number: <span class="number">80</span></span><br><span class="line"></span><br><span class="line">apiVersion: networking.istio.io/v1alpha3</span><br><span class="line">kind: Gateway</span><br><span class="line">metadata:</span><br><span class="line">  generation: <span class="number">3</span></span><br><span class="line">  name: nginx-gateway</span><br><span class="line">  namespace: nginx</span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    istio: ingressgateway</span><br><span class="line">  servers:</span><br><span class="line">  - hosts:</span><br><span class="line">    - my.gateway.com</span><br><span class="line">    port:</span><br><span class="line">      name: http</span><br><span class="line">      number: <span class="number">80</span></span><br><span class="line">      protocol: HTTP</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-12-Istio的总结"><a href="#3-5-12-Istio的总结" class="headerlink" title="3.5.12 Istio的总结"></a>3.5.12 Istio的总结</h3><p><img src="https://kingsoft-cloud.feishu.cn/space/api/box/stream/download/asynccode/?code=ZWY4ZGIxNzRlYmFmMjAzMzIxMjZmYzljZmIwNWNmY2NfWkZFbEx0VkhOY1pVbHlEeEs2cTJLT3VHUTdWQ3dXaWdfVG9rZW46RXJhdWJCU1dZb3V2MXh4c3BZdGNWdm5VbndlXzE2OTI2NzA5OTE6MTY5MjY3NDU5MV9WNA" alt="img"></p>
+<p>优点：</p>
+<ul>
+<li>Istio 是一个开源的服务网格平台，提供了安全、连接和监控微服务的统一方法。</li>
+<li>Istio 得到了 IBM、Google 和 Lyft 等行业领军者的支持，拥有活跃的社区和众多的落地案例。</li>
+<li>Istio 是 Kubernetes 的一等公民，被设计成模块化、平台无关的系统。</li>
+<li>Istio 提供了强大的流量管理、安全性和可观察性功能，可以轻松实现 A&#x2F;B 测试、金丝雀发布、故障注入等。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>Istio 对非 Kubernetes 环境的支持有限，可能需要根据旧有基础设施进行适配才能正常工作。</li>
+<li>Istio 只有 HTTP 协议是一等公民，对私有协议的支持不够完善，可能导致一些功能的缺失。</li>
+<li>Istio 扩展的成本并不低，可能需要修改多个复杂的代码库，并且面临与社区割裂的风险。</li>
+<li>Istio 在集群规模较大时的性能问题，可能导致 Envoy 的内存开销、Istio 的 CPU 开销、XDS 的下发时效性等问题。</li>
+<li>Istio 缺乏成熟的产品生态，可能需要研发基于 Istio 的上层产品来满足可视化界面、权限和账号系统对接等需求。</li>
+<li>Istio 目前解决的问题域还很有限，还有一些分布式系统的复杂语义和功能并未纳入到 Istio 的 Sidecar 运行时之中。</li>
+<li>Istio 技术架构的成熟度还没有达到预期，经历了多次重大变动，导致升级更新带来不兼容性问题。</li>
+</ul>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://istio.io/latest/zh/">https://istio.io/latest/zh/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://vercen.github.io">Vercen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://vercen.github.io/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/">https://vercen.github.io/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://vercen.github.io" target="_blank">Vercen'blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a></div><div class="post_share"><div class="social-share" data-image="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/04/25/BOINC%20%E2%80%94%20%E4%B8%BA%E7%A7%91%E7%A0%94%E4%BA%8B%E4%B8%9A%E8%B4%A1%E7%8C%AE%E9%97%B2%E7%BD%AE%E7%9A%84%E7%AE%97%E5%8A%9B/" title="BOINC — 为科研事业贡献闲置的算力"><img class="cover" src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808922.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BOINC — 为科研事业贡献闲置的算力</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/11/25/%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" title="服务器常用操作整理"><img class="cover" src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-25</div><div class="title">服务器常用操作整理</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808125.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Vercen</div><div class="author-info__description">静默听风雨·安然晓蝉声</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Vercen" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:fank-ttp@qq.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/456786469" target="_blank" title="B站"><i class="fa-brands fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">非侵入式的微服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%99%E5%AD%A6%E7%9B%AE%E6%A0%87"><span class="toc-number">2.</span> <span class="toc-text">教学目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%84%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="toc-number">3.</span> <span class="toc-text">预习内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E8%AF%BE%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">上课准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">3.非侵入式的微服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E4%BB%A3%E7%A0%81%E7%9A%84%E4%BE%B5%E5%85%A5%E5%BC%8F%E8%B7%9F%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 代码的侵入式跟非侵入式的介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E4%B8%BB%E6%B5%81%E4%BE%B5%E5%85%A5%E5%BC%8F%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 主流侵入式微服务框架的介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-Spring-Cloud"><span class="toc-number">5.2.1.</span> <span class="toc-text">3.2.1 Spring Cloud</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-spring-cloud-%E4%BE%B5%E5%85%A5%E6%80%A7"><span class="toc-number">5.2.2.</span> <span class="toc-text">3.2.2 spring cloud 侵入性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E4%BE%B5%E5%85%A5%E5%BC%8F%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">5.3.</span> <span class="toc-text">3.3 侵入式微服务框架的优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%9A%84%E6%BC%94%E5%8C%96%E4%BB%A5%E5%8F%8A%E6%A6%82%E5%BF%B5"><span class="toc-number">5.4.</span> <span class="toc-text">3.4 非侵入式微服务框架的演化以及概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E6%A1%86%E6%9E%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86"><span class="toc-number">5.4.1.</span> <span class="toc-text">3.4.1 非侵入式框架的设计原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%9A%84%E6%BC%94%E5%8F%98"><span class="toc-number">5.4.2.</span> <span class="toc-text">3.4.2 微服务框架的演变</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-1-%E5%B0%8F%E5%9E%8B%E6%9C%BA%E6%97%B6%E4%BB%A3"><span class="toc-number">5.4.2.1.</span> <span class="toc-text">3.4.2.1 小型机时代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-2-%E5%9E%82%E7%9B%B4%E6%8B%86%E5%88%86"><span class="toc-number">5.4.2.2.</span> <span class="toc-text">3.4.2.2 垂直拆分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-3-%E9%9B%86%E7%BE%A4%E5%8C%96%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9E%B6%E6%9E%84"><span class="toc-number">5.4.2.3.</span> <span class="toc-text">3.4.2.3 集群化负载均衡架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-4-%E6%9C%8D%E5%8A%A1%E5%8C%96%E6%94%B9%E9%80%A0%E6%9E%B6%E6%9E%84"><span class="toc-number">5.4.2.4.</span> <span class="toc-text">3.4.2.4 服务化改造架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-5-%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84"><span class="toc-number">5.4.2.5.</span> <span class="toc-text">3.4.2.5 服务治理与微服务架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-6-%E6%96%B0%E6%97%B6%E4%BB%A3%E7%9A%84%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E6%9C%8D%E5%8A%A1%E7%BD%91%E6%A0%BC%E6%9E%B6%E6%9E%84"><span class="toc-number">5.4.2.6.</span> <span class="toc-text">3.4.2.6 新时代的非侵入式服务网格架构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">5.4.3.</span> <span class="toc-text">3.4.3 非侵入式微服务框架的优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-%E4%B8%BB%E6%B5%81%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E7%AE%80%E4%BB%8B"><span class="toc-number">5.5.</span> <span class="toc-text">3.5 主流非侵入式微服务框架简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-1-Service-Mesh-%E7%9A%84%E8%83%8C%E6%99%AF"><span class="toc-number">5.5.1.</span> <span class="toc-text">3.5.1 Service Mesh 的背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linkerd%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-number">5.5.1.1.</span> <span class="toc-text">Linkerd设计思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CNCF%E4%BA%91%E5%8E%9F%E7%94%9F%E7%BB%84%E7%BB%87%E5%8F%91%E5%B1%95%E8%B7%9F%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.5.1.2.</span> <span class="toc-text">CNCF云原生组织发展跟介绍</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-2-K8s"><span class="toc-number">5.5.2.</span> <span class="toc-text">3.5.2 K8s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-3-K8s%E7%9A%84%E6%A0%B8%E5%BF%83%E7%BB%84%E6%88%90"><span class="toc-number">5.5.3.</span> <span class="toc-text">3.5.3 K8s的核心组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-4-k8s%E4%B8%8EIstio"><span class="toc-number">5.5.4.</span> <span class="toc-text">3.5.4 k8s与Istio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-5-Istio"><span class="toc-number">5.5.5.</span> <span class="toc-text">3.5.5 Istio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-6-Istio%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3"><span class="toc-number">5.5.6.</span> <span class="toc-text">3.5.6 Istio架构详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-7-Sidecar%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">5.5.7.</span> <span class="toc-text">3.5.7 Sidecar的注入方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-8-Istio%E7%9A%84Ingress-Gateway"><span class="toc-number">5.5.8.</span> <span class="toc-text">3.5.8 Istio的Ingress Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-9-Istio%E7%BD%91%E5%85%B3Gateway%E6%A6%82%E8%BF%B0"><span class="toc-number">5.5.9.</span> <span class="toc-text">3.5.9 Istio网关Gateway概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-10-Istio-%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%EF%BC%88Virtual-service"><span class="toc-number">5.5.10.</span> <span class="toc-text">3.5.10 Istio 虚拟服务（Virtual service)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-11-Istio-%E7%9B%AE%E7%9A%84%E8%A7%84%E5%88%99%EF%BC%88DestinationRule"><span class="toc-number">5.5.11.</span> <span class="toc-text">3.5.11 Istio 目的规则（DestinationRule)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-12-Istio%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">5.5.12.</span> <span class="toc-text">3.5.12 Istio的总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="服务器常用操作整理"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808932.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="服务器常用操作整理"/></a><div class="content"><a class="title" href="/2023/08/25/%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="服务器常用操作整理">服务器常用操作整理</a><time datetime="2023-08-25T08:21:57.000Z" title="发表于 2023-08-25 16:21:57">2023-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/25/BOINC%20%E2%80%94%20%E4%B8%BA%E7%A7%91%E7%A0%94%E4%BA%8B%E4%B8%9A%E8%B4%A1%E7%8C%AE%E9%97%B2%E7%BD%AE%E7%9A%84%E7%AE%97%E5%8A%9B/" title="BOINC — 为科研事业贡献闲置的算力"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808922.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="BOINC — 为科研事业贡献闲置的算力"/></a><div class="content"><a class="title" href="/2023/04/25/BOINC%20%E2%80%94%20%E4%B8%BA%E7%A7%91%E7%A0%94%E4%BA%8B%E4%B8%9A%E8%B4%A1%E7%8C%AE%E9%97%B2%E7%BD%AE%E7%9A%84%E7%AE%97%E5%8A%9B/" title="BOINC — 为科研事业贡献闲置的算力">BOINC — 为科研事业贡献闲置的算力</a><time datetime="2023-04-25T08:21:57.000Z" title="发表于 2023-04-25 16:21:57">2023-04-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/12/%5B%E4%B8%AA%E4%BA%BA%E6%90%9C%E9%9B%86%E7%9A%84GPT%E5%8F%8A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%B5%84%E6%BA%90%5D/" title="个人搜集的GPT及语言模型相关信息资源"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808911.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="个人搜集的GPT及语言模型相关信息资源"/></a><div class="content"><a class="title" href="/2023/04/12/%5B%E4%B8%AA%E4%BA%BA%E6%90%9C%E9%9B%86%E7%9A%84GPT%E5%8F%8A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%E8%B5%84%E6%BA%90%5D/" title="个人搜集的GPT及语言模型相关信息资源">个人搜集的GPT及语言模型相关信息资源</a><time datetime="2023-04-12T08:21:57.000Z" title="发表于 2023-04-12 16:21:57">2023-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/02/Java%E4%B8%ADSynchronized%E7%9A%84%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86/" title="Java中Synchronized的优化原理"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808951.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java中Synchronized的优化原理"/></a><div class="content"><a class="title" href="/2023/04/02/Java%E4%B8%ADSynchronized%E7%9A%84%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86/" title="Java中Synchronized的优化原理">Java中Synchronized的优化原理</a><time datetime="2023-04-02T08:21:57.000Z" title="发表于 2023-04-02 16:21:57">2023-04-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%20%E2%80%9CAPI%20%E7%BD%91%E5%85%B3%E2%80%9D%EF%BC%9F/" title="为什么需要 “API 网关”？"><img src="https://img-1259413572.cos.ap-shanghai.myqcloud.com/img/202303251808913.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么需要 “API 网关”？"/></a><div class="content"><a class="title" href="/2023/03/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%20%E2%80%9CAPI%20%E7%BD%91%E5%85%B3%E2%80%9D%EF%BC%9F/" title="为什么需要 “API 网关”？">为什么需要 “API 网关”？</a><time datetime="2023-03-26T08:21:57.000Z" title="发表于 2023-03-26 16:21:57">2023-03-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(90deg, #ffedf4 0%, #B5FFFC 100%)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Vercen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-self-phi.vercel.app/',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-self-phi.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8475063755" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-autoplay="true"> </div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
