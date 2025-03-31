@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>https://blog.zhilu.cyou/</id>
   <title>纸鹿摸鱼处</title>
-  <updated>2025-03-31T02:57:34.941Z</updated>
+  <updated>2025-03-31T03:10:53.693Z</updated>
   <description>纸鹿本鹿的个人博客，分享技术与生活。“折腾不止，摸鱼生活——摸门🙏🏻”。纸鹿是一名开源爱好者，结识了许多志同道合的朋友。这个博客记录了他在生活和技术学习中的点滴经历，充满启发与思考。网站界面简洁美观，内容丰富实用，人气互动活跃，涵盖了编程、生活、学习等多个领域，为读者提供了卓越的阅读体验。</description>
   <author>
     <name>纸鹿本鹿</name>
@@ -17,21 +17,6 @@
   <logo>https://www.zhilu.cyou/api/avatar.png</logo>
   <rights>© 2025 纸鹿本鹿</rights>
   <subtitle>纸鹿至麓不知路，支炉制露不止漉</subtitle>
-  <entry>
-    <id>https://blog.zhilu.cyou/2025/feb-fragments</id>
-    <title>二月碎片：油糕、AI滥用、噪音、银行卡</title>
-    <updated/>
-    <author>
-      <name>纸鹿本鹿</name>
-    </author>
-    <content type="html">
-      <![CDATA[  <a href="https://blog.zhilu.cyou/2025/feb-fragments">点击查看全文</a>]]>
-    </content>
-    <link href="https://blog.zhilu.cyou/2025/feb-fragments"></link>
-    <summary/>
-    <category term="生活"></category>
-    <published>2025-02-16T04:30:24.000Z</published>
-  </entry>
   <entry>
     <id>https://blog.zhilu.cyou/2024/blog-record</id>
     <title>迟到三月的年末博客杂谈：动力、文章和内容</title>
@@ -766,5 +751,20 @@
     <summary>配置 MIT 6.S081 操作系统课程中的 xv6 实验环境，包括 RISC-V 和 QEMU 安装，调整 Makefile 编译选项，以及 VSCode 和 clangd 相关设置。</summary>
     <category term="经验分享"></category>
     <published>2023-11-20T09:09:28.000Z</published>
+  </entry>
+  <entry>
+    <id>https://blog.zhilu.cyou/2022/linux-interview-2020</id>
+    <title>西邮Linux兴趣小组2020纳新面试题题解</title>
+    <updated>2023-11-10T13:08:28.000Z</updated>
+    <author>
+      <name>纸鹿本鹿</name>
+    </author>
+    <content type="html">
+      <![CDATA[<img src="https://7.isyangs.cn/24/65a8dcfb73493-24.jpg" />  <a href="https://blog.zhilu.cyou/2022/linux-interview-2020">点击查看全文</a>]]>
+    </content>
+    <link href="https://blog.zhilu.cyou/2022/linux-interview-2020"></link>
+    <summary></summary>
+    <category term="代码"></category>
+    <published>2022-11-20T05:57:19.000Z</published>
   </entry>
 </feed>
