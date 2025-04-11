@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <opml version="2.0">
   <head>
-    <title>纸鹿摸鱼处的友链订阅</title>
-    <dateCreated>2019-07-19T00:00:00.000Z</dateCreated>
-    <dateModified>2025-03-31T06:38:45.953Z</dateModified>
-    <ownerName>纸鹿本鹿</ownerName>
-    <ownerEmail>hi@zhilu.cyou</ownerEmail>
-    <ownerId>https://www.zhilu.cyou/</ownerId>
+    <title>关山月的友链订阅</title>
+    <dateCreated>2020-07-19T00:00:00.000Z</dateCreated>
+    <dateModified>2025-04-11T10:35:51.495Z</dateModified>
+    <ownerName>关山月</ownerName>
+    <ownerEmail>2915017234@qq.com</ownerEmail>
+    <ownerId>https://www.gsyue.cc/</ownerId>
     <docs>https://opml.org/spec2.opml</docs>
   </head>
   <body>
-    <outline text="纸鹿摸鱼处" type="rss" xmlUrl="https://blog.zhilu.cyou/atom.xml" created="2019-07-19T00:00:00.000Z" description="纸鹿至麓不知路，支炉制露不止漉" htmlUrl="https://blog.zhilu.cyou/"></outline>
+    <outline text="关山月" type="rss" xmlUrl="https://www.gsyue.cc/atom.xml" created="2020-07-19T00:00:00.000Z" description="明川悠悠行，山色空蒙翠影清。" htmlUrl="https://www.gsyue.cc/"></outline>
     <outline text="风记星辰" type="rss" xmlUrl="https://www.thyuu.com/feed" created="2024-02-01T00:00:00.000Z" description="热爱你来过的每度温暖" htmlUrl="https://thyuu.com/"></outline>
     <outline text="静かな森" type="rss" xmlUrl="https://innei.in/feed" created="2024-02-13T00:00:00.000Z" description="致虚极，守静笃。" htmlUrl="https://innei.in/"></outline>
     <outline text="Randwind&apos;s Blog" type="rss" xmlUrl="https://randwind.com/feed.xml" created="2024-02-03T00:00:00.000Z" description="你可以期待太阳从东方升起，而风却随心所欲地从四面八方吹来。" htmlUrl="https://www.randwind.com/"></outline>
